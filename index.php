@@ -18,8 +18,8 @@ session_start();
     <link rel="shortcut icon" href="assets/img/logo/favicon/favicon.ico">
 
     <link rel="stylesheet" href="lib/aos/aos.css">
-    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-icons.css">
 
     <link rel="stylesheet" href="assets/css/style.css">

@@ -10,7 +10,7 @@
                 </a>
             </li>
             <li>
-                <a href="?page=home-admin" class="nav-link">
+                <a href="?page=admin" class="nav-link">
                     Home Admin
                 </a>
             </li>
@@ -36,6 +36,8 @@
             </li>
         </ul>
         <hr>
+        <strong><a class="d-flex align-items-center text-decoration-none" href="?auth=login"><i
+                    class="bi bi-arrow-right-square fs-4 ms-2"></i> Login</a></strong>
         <strong><a class="d-flex align-items-center text-decoration-none" href="?auth=logout"><i
                     class="bi bi-arrow-left-square fs-4 ms-2"></i> Logout</a></strong>
     </div>

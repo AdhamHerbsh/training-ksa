@@ -5078,6 +5078,10 @@
   content: "\f5ef";
 }
 
+.bi-twitter-x::before {
+  content: "\f8db";
+}
+
 .bi-type-bold::before {
   content: "\f5f0";
 }

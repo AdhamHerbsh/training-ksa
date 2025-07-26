@@ -1,8 +1,45 @@
 {
+  "header": {
+    "translation": "عربي"
+  },
   "page": {
     "title": "Training Department - King Fahad Medical City"
   },
   "home": {
-    "heading": "Home123"
+    "heading": "Home",
+    "our-vision": {
+      "title": "Our Vision",
+      "p": "For the Training Department at the Second Health Cluster in Riyadh to be a leading model in developing competencies according to the highest professional and educational standards."
+    },
+    "our-mission": {
+      "title": "Our Mission",
+      "p": "To develop and empower human resources through targeted training programs and a safe, innovative learning environment."
+    }
+  },
+  "about": {
+    "title": "Who we are",
+    "statement": "\"Where perception becomes reality and dreams come true.\"",
+    "p": "King Fahad Medical City (KFMC) started as a pioneering idea that became a reality. This idea was adopted by King Fahad bin Abdulaziz — may he rest in peace — and the foundation stone was laid by Prince Salman bin Abdulaziz in 1403 AH, corresponding to 1983 AD. The city began its operations during the reign of the Custodian of the Two Holy Mosques, King Fahad bin Abdulaziz, and it was officially inaugurated by King Abdullah bin Abdulaziz — who was then Crown Prince — on 21/08/1425 AH, corresponding to 05/10/2004 AD. KFMC is strategically located in the heart of Riyadh, the capital of Saudi Arabia. It is one of the largest and fastest-growing medical complexes in the Middle East, with a capacity of 1,200 beds. It includes a highly qualified and professional administrative and technical team, all working toward one goal: making KFMC a medical reference center to which patients are referred from all over the region and at all stages of treatment. The city brings together medical and professional competencies from various specialties to provide the best care for more than 30,000 inpatients and 500,000 outpatients annually. Due to the qualified staff in the work environment at KFMC, it provides high-quality healthcare with full commitment to excellence in patient care. The city also seeks to achieve one of its most important priorities, which is the dissemination of knowledge and the promotion of a culture of development and achievement in the community."
+  },
+  "usage": {
+    "title": "Usage Policy",
+    "p": "Responsibility of the Second Riyadh Healthcare Group The Second Riyadh Healthcare Group assumes no responsibility for any damage or misuse suffered by third parties as a result of using the data available on its portal. The Second Riyadh Healthcare Group also does not guarantee the continuity of this data or any part thereof. The Ministry also assumes no responsibility to users of this data for any damage or loss they may incur as a result of reusing the data. Reuse Conditions The user must not alter, edit, or destroy the source of the data. The data must not be used for political purposes, to support illegal or criminal activity, to express racism or discrimination, to negatively impact culture or equality, or to incite any illegal behavior or behavior that violates customs and traditions of the Kingdom. Data Source When using this data, its source (the Second Riyadh Healthcare Group Portal) must be cited. The source of the reused data must be referenced by adding a link to the Second Riyadh Healthcare Group Portal to preserve the intellectual property of the data, as well as the credibility and authenticity of the source. Prohibited Use It is prohibited to use the data in a manner that reveals that it is licensed for private disclosure, or that the user is an official entity."
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "p": "Using the Riyadh Second Healthcare Group's portal, services, and applications constitutes your acceptance of the Privacy Policy and the terms and conditions governing the portal and its application. If you do not agree to this policy, you should not use any of the services. Visitors to the portal and users of its services and applications should familiarize themselves with the privacy policy and principles and confidentiality of information in order to be informed of any updates Under no circumstances shall the Riyadh Second Healthcare Group be liable for any direct, indirect, incidental, or consequential damages, whether special or exceptional, arising from the use of or inability to use this portal."
+  },
+  "contact": {
+    "title": "Training Department At Riyadh Second Health Cluster",
+    "ex": "Extension: 10873",
+    "em": "Email: cooperativetraining@kfmc.med.sa",
+    "loc": "Location: Medical City Gate No. 2 – College of Medicine – 2nd Floor.",
+    "link": "View location on map"
+  },
+  "footer": {
+    "title": "Training Department - King Fahad Medical City",
+    "contact": "Contact Us",
+    "privacy-policy": "Privacy Policy",
+    "usage-policy": "Usage Policy"
   }
 }
