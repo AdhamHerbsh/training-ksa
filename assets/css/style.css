@@ -34,7 +34,7 @@ body {
 
 header {
     color: var(--bs-white);
-    background-color: rgba(0, 0, 0, 0.6)
+    background-color: rgba(0, 0, 0, 0.8)
 }
 
 
@@ -42,12 +42,67 @@ nav {}
 
 #navmenu {
     display: none;
-    z-index: 1000;
+    z-index: 1021;
     transition: ease-in-out .5s;
 }
 
 section {
     min-height: 80vh;
+}
+
+/* Custom scrollbar styles */
+.overflow-auto::-webkit-scrollbar {
+    width: 8px;
+}
+
+.overflow-auto::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Ensure sticky elements work properly */
+.sticky-top {
+    z-index: 1020;
+}
+
+/* Custom CSS to supplement Bootstrap */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.step-circle.active {
+    background-color: #0d6efd !important;
+    /* Bootstrap's --bs-primary */
+    color: white !important;
+}
+
+.step-circle.done {
+    background-color: #198754 !important;
+    /* Bootstrap's --bs-success */
+    color: white !important;
+}
+
+.step-label.active-label {
+    color: #0d6efd !important;
+    /* Bootstrap's --bs-primary */
+}
+
+/* Details Section Management */
+.details-section {
+    display: none;
+}
+
+.details-section.active {
+    display: block;
 }
 
 /* Training Requests Styles */
@@ -141,6 +196,17 @@ section {
     font-size: 1.5rem;
 }
 
+.form-floating label {
+    color: #adb5bd;
+}
+
+.error {
+    color: #dc3545;
+}
+
+.success {
+    color: #28a745;
+}
 
 .form-signin,
 .form-signup {

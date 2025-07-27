@@ -3,41 +3,35 @@
             <button id="closeNavmenu" class="btn text-white px-2 py-1"><i class="bi bi-x fs-4"></i></button>
         </div>
         <hr>
+        <?php $currentPage = $_GET['page'] ?? 'home'; ?>
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
-                <a href="?page=home" class="nav-link active" aria-current="page">
+                <a href="?page=home" class="nav-link<?php echo ($currentPage == 'home') ? ' active' : ''; ?>"
+                    aria-current="page">
                     Home
                 </a>
             </li>
             <li>
-                <a href="?page=admin" class="nav-link">
-                    Home Admin
-                </a>
-            </li>
-            <li>
-                <a href="?page=assembly-facilities" class="nav-link">
-                    Assembly Facilities
-                </a>
-            </li>
-            <li>
-                <a href="?page=usage" class="nav-link">
-                    Usage
-                </a>
-            </li>
-            <li>
-                <a href="?page=privacy" class="nav-link">
-                    Privacy
-                </a>
-            </li>
-            <li>
-                <a href="?page=about" class="nav-link">
+                <a href="?page=about" class="nav-link<?php echo ($currentPage == 'about') ? ' active' : ''; ?>">
                     About
+                </a>
+            </li>
+            <li>
+                <a href="?page=assembly-facilities"
+                    class="nav-link<?php echo ($currentPage == 'assembly-facilities') ? ' active' : ''; ?>">
+                    Assembly Facilities
                 </a>
             </li>
         </ul>
         <hr>
-        <strong><a class="d-flex align-items-center text-decoration-none" href="?auth=login"><i
-                    class="bi bi-arrow-right-square fs-4 ms-2"></i> Login</a></strong>
-        <strong><a class="d-flex align-items-center text-decoration-none" href="?auth=logout"><i
-                    class="bi bi-arrow-left-square fs-4 ms-2"></i> Logout</a></strong>
+        <?php if (isset($_SESSION['loggedin']) != true) : ?>
+
+            <strong><a class="d-flex align-items-center text-decoration-none" href="?auth=login"><i
+                        class="bi bi-arrow-right-square fs-4 ms-2"></i> Login</a></strong>
+        <?php else : ?>
+
+            <strong><a class="d-flex align-items-center text-decoration-none" href="?auth=logout"><i
+                        class="bi bi-arrow-left-square fs-4 ms-2"></i> Logout</a></strong>
+        <?php endif; ?>
+
     </div>

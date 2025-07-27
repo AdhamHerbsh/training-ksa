@@ -1,12 +1,13 @@
-<section>
+<section class="align-content-center">
 
     <div class="container">
         <div class="row">
             <div
-                class="overlay-box col-12 col-md-8 text-center py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4 text-white">
-                <h2 data-i18n="about.title">Who we are</h2>
+                class="overlay-box col-12 col-md-8 py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4 text-white">
+                <h2 class="text-center" data-i18n="about.title">Who we are</h2>
                 <hr>
-                <h4 data-i18n="about.statement">"Where perception becomes reality and dreams come true."</h4>
+                <h4 class="text-center" data-i18n="about.statement">"Where perception becomes reality and dreams come
+                    true."</h4>
                 <br>
                 <p class="lead" data-i18n="about.p">
                     King Fahad Medical City (KFMC) started as a pioneering idea that became a reality. This idea was

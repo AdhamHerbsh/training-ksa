@@ -47,8 +47,8 @@
             </div>
 
             <button type="submit" class="w-100 btn btn-lg btn-primary mb-3">Submit Survey</button>
+            <a href="?page=home" class="w-100 btn btn-lg btn-outline-secondary mb-3">Back</a>
 
-            <p class="mt-5 mb-3 text-muted">© 1983 - 2025</p>
         </form>
     </div>
 </section>

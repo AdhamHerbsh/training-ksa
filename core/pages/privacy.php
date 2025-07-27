@@ -1,10 +1,10 @@
-<section>
+<section class="align-content-center">
 
     <div class="container">
         <div class="row">
             <div
-                class="overlay-box col-12 col-md-8 text-center py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4 text-white">
-                <h2 data-i18n="privacy.title">Privacy Policy </h2>
+                class="overlay-box col-12 col-md-8 py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4 text-white">
+                <h2 class="text-center" data-i18n="privacy.title">Privacy Policy </h2>
                 <p class="lead" data-i18n="privacy.p">Using the Riyadh Second Healthcare Group's portal, services, and
                     applications constitutes your acceptance of the Privacy Policy and the terms and conditions
                     governing the portal and its application. If you do not agree to this policy, you should not use any

@@ -1,4 +1,4 @@
-<section>
+<section class="align-content-center">
 
     <div class="container">
         <div class="row">

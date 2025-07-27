@@ -2,8 +2,6 @@
 session_start();
 ?>
 
-<?php require('core/db/connection.php'); ?>
-
 <!DOCTYPE html>
 <html lang="en">
 

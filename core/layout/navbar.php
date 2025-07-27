@@ -14,7 +14,7 @@
         <li class="nav-item">
             <button id="openNavmenu" type="button" class="btn" data-bs-toggle="button" aria-pressed="false"
                 autocomplete="off">
-                <i class="bi bi-menu-app text-white"></i>
+                <i class="bi bi-list text-white"></i>
             </button>
         </li>
     </ul>
