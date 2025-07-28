@@ -116,10 +116,15 @@ CREATE TABLE IF NOT EXISTS `trainees` (
   `training_letter_path` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `cv_path` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `status` enum('Pending','Reviewed','Accepted','Rejected') COLLATE utf8mb4_general_ci DEFAULT 'Pending',
+  `trainee_response` enum('Accepted','Rejected') COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Trainee response to accepted training',
+  `response_date` timestamp NULL DEFAULT NULL COMMENT 'Date when trainee responded',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `national_id` (`national_id`)
+  UNIQUE KEY `national_id` (`national_id`),
+  KEY `idx_trainee_response` (`trainee_response`),
+  KEY `idx_user_status` (`user_id`,`status`),
+  KEY `idx_response_date` (`response_date`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Data exporting was unselected.
