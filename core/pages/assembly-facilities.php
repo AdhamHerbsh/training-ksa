@@ -5,7 +5,7 @@ require_once __DIR__ . '/../db/connection.php';
 <section class="d-flex flex-column h-100">
     <div class="container flex-grow-1">
 
-        <div class="row sticky-top mb-3 bg-dark text-white rounded-4">
+        <div class="row bg-filter sticky-top mb-3 text-white rounded-4">
             <!-- Filter Buttons -->
             <div class="row mb-3 py-3">
                 <div class="col-12 d-flex justify-content-center gap-3">
@@ -50,14 +50,16 @@ require_once __DIR__ . '/../db/connection.php';
                     <!-- Health Centers -->
                     <div class="col-12 col-md-6 col-lg-3 facility-item" data-type="health-center">
                         <div class="overlay-box h-100 py-3 px-4 shadow border border-1 border-secondary rounded-4 text-white">
-                            <h3><?php echo htmlspecialchars($center['center_name'], ENT_QUOTES, 'UTF-8'); ?></h3>
-                            <a href="mailto:<?php echo $center['email'] ?>"> <i class="bi bi-envelope"></i>
-                                <small><?php echo $center['email'] ?></small></a>
+                            <h3 class="text-center"><?php echo htmlspecialchars($center['center_name'], ENT_QUOTES, 'UTF-8'); ?>
+                            </h3>
                             <p class="lead"><?php echo $center['region_cluster'] ?></p>
                             <hr>
+                            <a href="mailto:<?php echo $center['email'] ?>" class="nav-link text-decoration-underline"> <i
+                                    class="bi bi-envelope"></i>
+                                <small><?php echo $center['email'] ?></small></a>
                             <p class="lead"><?php echo $center['governorate'] ?></p>
                             <div class="mt-3">
-                                <a href="<?php echo $center['location_url'] ?>" class="btn btn-outline-primary"> <i
+                                <a href="<?php echo $center['location_url'] ?>" class="btn btn-outline-light"> <i
                                         class="bi bi-pin-map"></i> Location on Map</a>
                             </div>
                         </div>
@@ -90,12 +92,11 @@ require_once __DIR__ . '/../db/connection.php';
                             <h3><?php echo htmlspecialchars($hospital['hospital_name'], ENT_QUOTES, 'UTF-8'); ?></h3>
                             <p class="lead"><?php echo $hospital['region_cluster'] ?></p>
                             <hr>
-                            <span class="badge bg-primary fs-5"><?php echo $hospital['governorate'] ?></span>
-                            <span class="badge bg-secondary fs-5"> <i class="bi bi-telephone"></i>
-
-                                <?php echo $hospital['phone_number'] ?></span>
+                            <p class="lead"> <i class="bi bi-telephone"></i>
+                                <?php echo $hospital['phone_number'] ?></p>
+                            <p class="lead"><?php echo $hospital['governorate'] ?></p>
                             <div class="mt-3">
-                                <a href="<?php echo $center['location_url'] ?>" class="btn btn-outline-primary"> <i
+                                <a href="<?php echo $center['location_url'] ?>" class="btn btn-outline-light"> <i
                                         class="bi bi-pin-map"></i> Location on Map</a>
                             </div>
                         </div>

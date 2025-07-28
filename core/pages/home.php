@@ -14,14 +14,17 @@
                 </div>
             </div>
         <?php else : ?>
-            <div class="row">
-                <div class="overlay-box col-md-12 text-bg-info text-center py-2 mb-3 rounded-4">
-                    <h1>Welcome <?php echo (isset($_SESSION['name_en']) ? $_SESSION['name_en'] : 'To Home Page'); ?>
-                    </h1>
-                    <p></p>
-                </div>
-            </div>
             <?php if ($_SESSION['user_type'] === 'Trainee') : ?>
+                <?php if (isset($_SESSION['success_message'])) : ?>
+                    <div class="container text-center">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <strong>Congratulation ! ❤️</strong> Registration submitted successfully!
+                        </div>
+
+                    </div>
+                <?php endif; ?>
+
                 <div class="container text-center">
                     <div class="row">
                         <div class="col-sm-4 mb-3">

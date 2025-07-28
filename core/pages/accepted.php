@@ -1,3 +1,42 @@
+<?php
+
+// Database configuration
+require('core/db/connection.php');
+
+// --- Security and Authentication Checks ---
+// Check if user is authenticated
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: ?auth=login"); // Redirect to login page
+    exit();
+}
+
+// Check if user is a Supervisor
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Supervisor') {
+    header("Location: ?page=home"); // Redirect if not a Supervisor
+    exit();
+}
+
+// Fetch data from the database
+$requests = [];
+try {
+    $sql = "SELECT * FROM trainees WHERE status LIKE 'Accepted' ORDER BY created_at DESC"; // Order by most recent
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $requests[] = $row;
+        }
+    }
+} catch (mysqli_sql_exception $e) {
+    // Log the error and show a user-friendly message
+    error_log("Database error fetching trainees: " . $e->getMessage());
+    $_SESSION['error_message'] = "Could not retrieve training requests. Please try again later.";
+}
+
+$conn->close();
+
+?>
+
 <section class="py-4">
     <div class="row justify-content-center">
         <div class="col-12">
@@ -47,56 +86,59 @@
                                     Confirmation Date
                                     <i class="bi bi-arrow-down-up ms-1 text-muted small" data-sort="date"></i>
                                 </th>
-                                <th class="border-bottom border-secondary bg-dark bg-opacity-50"
-                                    data-i18n="accepted.actions">
-                                    Actions
-                                </th>
                             </tr>
                         </thead>
                         <tbody id="confirmedTable">
-                            <tr>
-                                <td class="border-bottom border-secondary">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="bg-success rounded-circle p-2 d-flex align-items-center justify-content-center"
-                                            style="width: 35px; height: 35px;">
-                                            <span class="text-white fw-bold">A</span>
+                            <?php if (!empty($requests)): ?>
+                                <?php foreach ($requests as $request): ?>
+                                    <tr>
+                                        <td class="border-bottom border-secondary">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="bg-success rounded-circle p-2 d-flex align-items-center justify-content-center"
+                                                    style="width: 35px; height: 35px;">
+                                                    <span
+                                                        class="text-white fw-bold"><?php echo htmlspecialchars(strtoupper(substr($request['en_name'], 0, 1))); ?></span>
+                                                </div>
+                                                <span><?php echo htmlspecialchars($request['en_name']); ?></span>
+                                            </div>
+                                        </td>
+                                        <td class="border-bottom border-secondary">
+                                            <span
+                                                class="badge bg-secondary"><?php echo htmlspecialchars($request['university']); ?></span>
+                                        </td>
+                                        <td class="border-bottom border-secondary">
+                                            <span
+                                                class="badge bg-info text-dark"><?php echo htmlspecialchars($request['major']); ?></span>
+                                        </td>
+                                        <td class="border-bottom border-secondary">
+                                            <a href="mailto:amani.2443@gmail.com"
+                                                class="text-decoration-none text-white d-flex align-items-center gap-2">
+                                                <i class="bi bi-envelope-fill text-muted"></i>
+                                                <?php echo htmlspecialchars($request['email']); ?>
+                                            </a>
+                                        </td>
+                                        <td class="border-bottom border-secondary">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <i class="bi bi-calendar-check text-success"></i>
+                                                <small><?php echo htmlspecialchars($request['updated_at']); ?></small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="22">
+                                        <div id="emptyRequestsState" class="text-center py-5">
+                                            <div class="text-muted">
+                                                <i class="bi bi-inbox-fill fs-1 mb-3 d-block"></i>
+                                                <h5 data-i18n="requests.no-data">No training requests found</h5>
+                                                <p class="small" data-i18n="requests.no-data-hint">New requests will
+                                                    appear here</p>
+                                            </div>
                                         </div>
-                                        <span>Amani Alharthi</span>
-                                    </div>
-                                </td>
-                                <td class="border-bottom border-secondary">
-                                    <span class="badge bg-secondary">443967779</span>
-                                </td>
-                                <td class="border-bottom border-secondary">
-                                    <span class="badge bg-info text-dark">Information Systems</span>
-                                </td>
-                                <td class="border-bottom border-secondary">
-                                    <a href="mailto:amani.2443@gmail.com"
-                                        class="text-decoration-none text-white d-flex align-items-center gap-2">
-                                        <i class="bi bi-envelope-fill text-muted"></i>
-                                        amani.2443@gmail.com
-                                    </a>
-                                </td>
-                                <td class="border-bottom border-secondary">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <i class="bi bi-calendar-check text-success"></i>
-                                        <small>2025-07-19</small>
-                                    </div>
-                                </td>
-                                <td class="border-bottom border-secondary">
-                                    <div class="btn-group btn-group-sm">
-                                        <button type="button" class="btn btn-outline-light" title="View Details">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-outline-primary" title="Send Message">
-                                            <i class="bi bi-chat-dots"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-outline-danger" title="Remove">
-                                            <i class="bi bi-x-circle"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>

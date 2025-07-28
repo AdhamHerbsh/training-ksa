@@ -1,4 +1,4 @@
-    <div id="navmenu" class="position-fixed flex-column flex-shrink-0 p-3 bg-dark h-100" data-aos="slide-right">
+    <div id="navmenu" class="position-fixed flex-column flex-shrink-0 p-3 h-100" data-aos="slide-right">
         <div class="d-flex flex-row">
             <button id="closeNavmenu" class="btn text-white px-2 py-1"><i class="bi bi-x fs-4"></i></button>
         </div>

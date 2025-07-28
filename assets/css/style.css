@@ -32,7 +32,9 @@ body {
 }
 
 
-header {
+header,
+#navmenu,
+.bg-filter {
     color: var(--bs-white);
     background-color: rgba(0, 0, 0, 0.8)
 }
@@ -196,6 +198,11 @@ section {
     font-size: 1.5rem;
 }
 
+.error-message {
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+}
+
 .form-floating label {
     color: #adb5bd;
 }
@@ -224,6 +231,10 @@ section {
     left: 80%;
 }
 
+/* #save-btn,
+#cancel-btn {
+    display: none;
+} */
 
 .overlay-box {
     background-color: rgba(0, 0, 0, 0.6);

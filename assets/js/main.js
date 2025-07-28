@@ -589,37 +589,88 @@
     }
   });
 
-  /** * Trainee Form Functionality
+  /**
+   * Trainee Form Functionality
    * This script handles the trainee form edit/save functionality
    **/
   document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("trainee-form");
     const editBtn = document.getElementById("edit-btn");
     const saveBtn = document.getElementById("save-btn");
-    const inputs = form.querySelectorAll("input, select");
+    const cancelBtn = document.getElementById("cancel-btn");
+    const editableInputs = form.querySelectorAll(".editable"); // Only target editable inputs
+    const allInputs = form.querySelectorAll("input, select");
+
+    let initialValues = {};
 
     function setEditable(editable) {
-      inputs.forEach((input) => {
-        if (input.type !== "button" && input.type !== "submit") {
-          input.disabled = !editable;
+      // Only modify editable inputs, leave readonly fields as readonly
+      editableInputs.forEach((input) => {
+        if (editable) {
+          input.removeAttribute("readonly");
+          input.removeAttribute("disabled");
+        } else {
+          // Handle select elements differently - they need disabled, not readonly
+          if (input.tagName.toLowerCase() === "select") {
+            input.setAttribute("disabled", true);
+          } else {
+            input.setAttribute("readonly", true);
+          }
         }
       });
+
+      // Show/hide buttons
       editBtn.style.display = editable ? "none" : "";
       saveBtn.style.display = editable ? "" : "none";
+      cancelBtn.style.display = editable ? "" : "none";
+    }
+
+    function storeInitialValues() {
+      initialValues = {};
+      allInputs.forEach((input) => {
+        if (input.name) initialValues[input.name] = input.value;
+      });
+    }
+
+    function restoreInitialValues() {
+      allInputs.forEach((input) => {
+        if (input.name && initialValues.hasOwnProperty(input.name)) {
+          input.value = initialValues[input.name];
+        }
+      });
     }
 
     editBtn.addEventListener("click", function () {
+      storeInitialValues();
       setEditable(true);
-      inputs[0].focus();
+      // Focus on the first editable input
+      if (editableInputs.length > 0) {
+        editableInputs[0].focus();
+      }
     });
 
-    form.addEventListener("submit", function (e) {
+    cancelBtn.addEventListener("click", function () {
+      restoreInitialValues();
       setEditable(false);
     });
 
+    // Temporarily enable disabled selects before form submission
+    form.addEventListener("submit", function (e) {
+      // Temporarily enable any disabled select elements so their values are submitted
+      const disabledSelects = form.querySelectorAll("select[disabled]");
+      disabledSelects.forEach((select) => {
+        select.removeAttribute("disabled");
+      });
+
+      // Hide buttons during submission
+      editBtn.style.display = "none";
+      saveBtn.style.display = "none";
+      cancelBtn.style.display = "none";
+    });
+
+    // Initialize form in readonly state
     setEditable(false);
   });
-
   /**
    * Timeline Steps Functionality
    * This script handles the timeline steps display and interaction
@@ -757,4 +808,43 @@
     // Initialize
     filterCenters();
   });
+
+  /**
+   * Form Validation
+   * This script handles form validation for various fields like ID/Iqama Number,
+   * Mobile Number, and Email.
+   **/
+  function validateForm(event) {
+    let isValid = true;
+    const errors = [];
+
+    // Example: ID/Iqama Number validation
+    const idIqama = document.getElementById("id_iqama_number");
+    if (idIqama.value.length !== 10 || isNaN(idIqama.value)) {
+      errors.push("ID/Iqama Number must be 10 digits.");
+      isValid = false;
+    }
+
+    // Example: Mobile Number validation
+    const mobileNumber = document.getElementById("mobile_number");
+    if (mobileNumber.value.length !== 9 || isNaN(mobileNumber.value)) {
+      errors.push("Mobile Number must be 9 digits after the country code.");
+      isValid = false;
+    }
+
+    // Example: Email validation
+    const email = document.getElementById("email");
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email.value)) {
+      errors.push("Please enter a valid email address.");
+      isValid = false;
+    }
+
+    // Display errors if any (you might want to integrate this with your PHP error display)
+    if (!isValid) {
+      alert(errors.join("\n")); // Simple alert for demonstration
+      event.preventDefault(); // Stop form submission
+    }
+    return isValid;
+  }
 })();
