@@ -5,7 +5,6 @@
                     width="50%">
             </span>
         </a>
-
         <?php include('navbar.php'); ?>
 
     </header>

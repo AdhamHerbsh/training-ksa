@@ -44,7 +44,7 @@ $conn->close();
                 <!-- Header with Search -->
                 <div class="row align-items-center mb-4 gy-3">
                     <div class="col-12 col-sm-6">
-                        <h2 class="mb-0 text-white" data-i18n="accepted.title">Confirmed Trainees</h2>
+                        <h2 class="mb-0 text-white" data-i18n="accepted.title"></h2>
                     </div>
                     <div class="col-12 col-sm-6">
                         <div class="input-group">
@@ -52,7 +52,7 @@ $conn->close();
                                 <i class="bi bi-search text-white"></i>
                             </span>
                             <input type="text" class="form-control bg-dark text-white border-secondary"
-                                id="searchTrainees" placeholder="Search..." data-i18n="accepted.search-placeholder"
+                                id="searchTrainees" placeholder="" data-i18n="accepted.search-placeholder"
                                 aria-label="Search trainees">
                         </div>
                     </div>
@@ -65,25 +65,20 @@ $conn->close();
                             <tr class="align-middle">
                                 <th class="border-bottom border-secondary bg-dark bg-opacity-50"
                                     data-i18n="accepted.name">
-                                    Name
                                     <i class="bi bi-arrow-down-up ms-1 text-muted small" data-sort="name"></i>
                                 </th>
                                 <th class="border-bottom border-secondary bg-dark bg-opacity-50"
                                     data-i18n="accepted.student-id">
-                                    University ID
                                 </th>
                                 <th class="border-bottom border-secondary bg-dark bg-opacity-50"
                                     data-i18n="accepted.major">
-                                    Major
                                     <i class="bi bi-arrow-down-up ms-1 text-muted small" data-sort="major"></i>
                                 </th>
                                 <th class="border-bottom border-secondary bg-dark bg-opacity-50"
                                     data-i18n="accepted.email">
-                                    Email
                                 </th>
                                 <th class="border-bottom border-secondary bg-dark bg-opacity-50"
                                     data-i18n="accepted.confirm-date">
-                                    Confirmation Date
                                     <i class="bi bi-arrow-down-up ms-1 text-muted small" data-sort="date"></i>
                                 </th>
                             </tr>
@@ -131,9 +126,8 @@ $conn->close();
                                         <div id="emptyRequestsState" class="text-center py-5">
                                             <div class="text-muted">
                                                 <i class="bi bi-inbox-fill fs-1 mb-3 d-block"></i>
-                                                <h5 data-i18n="requests.no-data">No training requests found</h5>
-                                                <p class="small" data-i18n="requests.no-data-hint">New requests will
-                                                    appear here</p>
+                                                <h5 data-i18n="requests.no-data"></h5>
+                                                <p class="small" data-i18n="requests.no-data-hint"></p>
                                             </div>
                                         </div>
                                     </td>
@@ -147,7 +141,7 @@ $conn->close();
                 <div class="d-block d-sm-none mt-3">
                     <div class="alert alert-info d-flex align-items-center gap-2" role="alert">
                         <i class="bi bi-info-circle"></i>
-                        <span data-i18n="accepted.scroll-hint">Scroll horizontally to view all data</span>
+                        <span data-i18n="accepted.scroll-hint"></span>
                     </div>
                 </div>
 
@@ -155,8 +149,8 @@ $conn->close();
                 <div id="emptyState" class="d-none text-center py-5">
                     <div class="text-muted">
                         <i class="bi bi-inbox-fill fs-1 mb-3 d-block"></i>
-                        <h5 data-i18n="accepted.no-data">No confirmed trainees found</h5>
-                        <p class="small" data-i18n="accepted.no-data-hint">Confirmed trainees will appear here</p>
+                        <h5 data-i18n="accepted.no-data"></h5>
+                        <p class="small" data-i18n="accepted.no-data-hint"></p>
                     </div>
                 </div>
             </div>

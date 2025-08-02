@@ -19,7 +19,7 @@
                     <div class="container text-center">
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            <strong>Congratulation ! ❤️</strong> Registration submitted successfully!
+                            <strong data-i18n="home.registration-success.title"></strong> <span data-i18n="home.registration-success.message"></span>
                         </div>
 
                     </div>
@@ -32,8 +32,8 @@
                                 class="overlay-box overlay-hover py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4 text-white">
                                 <div class="card-body">
                                     <a href="?page=profile" class="text-decoration-none text-white card-hover">
-                                        <h2 data-i18n="admin.title">Personal Info</h2>
-                                        <p class="lead">View & Update Info</p>
+                                        <h2 data-i18n="home.personal-info.title"></h2>
+                                        <p class="lead" data-i18n="home.personal-info.description"></p>
                                     </a>
                                 </div>
                             </div>
@@ -43,8 +43,8 @@
                                 class="overlay-box overlay-hover py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4 text-white">
                                 <div class="card-body">
                                     <a href="?page=training-form" class="text-decoration-none text-white card-hover">
-                                        <h2 data-i18n="admin.title">Cooperavtive Training</h2>
-                                        <p class="lead">Register for cooperative training</p>
+                                        <h2 data-i18n="home.cooperative-training.title"></h2>
+                                        <p class="lead" data-i18n="home.cooperative-training.description"></p>
                                     </a>
                                 </div>
                             </div>
@@ -54,8 +54,8 @@
                                 class="overlay-box overlay-hover py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4 text-white">
                                 <div class="card-body">
                                     <a href="?page=tracking-request" class="text-decoration-none text-white card-hover">
-                                        <h2 data-i18n="admin.title">Track Request</h2>
-                                        <p class="lead">Track Training Request Status</p>
+                                        <h2 data-i18n="home.track-request.title"></h2>
+                                        <p class="lead" data-i18n="home.track-request.description"></p>
                                     </a>
                                 </div>
                             </div>
@@ -67,8 +67,8 @@
                                 class="overlay-box overlay-hover py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4 text-white">
                                 <div class="card-body">
                                     <a href="?page=clearance-form" class="text-decoration-none text-white card-hover">
-                                        <h2 data-i18n="admin.title">Clearance</h2>
-                                        <p class="lead">Request Training Clearance</p>
+                                        <h2 data-i18n="home.clearance.title"></h2>
+                                        <p class="lead" data-i18n="home.clearance.description"></p>
                                     </a>
                                 </div>
                             </div>
@@ -78,8 +78,8 @@
                                 class="overlay-box overlay-hover py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4 text-white">
                                 <div class="card-body">
                                     <a href="?page=survey-form" class="text-decoration-none text-white card-hover">
-                                        <h2 data-i18n="admin.title">Survey</h2>
-                                        <p class="lead">Complete Training Survey</p>
+                                        <h2 data-i18n="home.survey.title"></h2>
+                                        <p class="lead" data-i18n="home.survey.description"></p>
                                     </a>
                                 </div>
                             </div>
@@ -94,8 +94,8 @@
                                 class="overlay-box overlay-hover py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4 text-white">
                                 <div class="card-body">
                                     <a href="?page=profile" class="text-decoration-none text-white card-hover">
-                                        <h2 data-i18n="admin.title">Personal Info</h2>
-                                        <p class="lead">View & Update Info</p>
+                                        <h2 data-i18n="home.personal-info.title"></h2>
+                                        <p class="lead" data-i18n="home.personal-info.description"></p>
                                     </a>
                                 </div>
                             </div>
@@ -105,8 +105,8 @@
                                 class="overlay-box overlay-hover py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4 text-white">
                                 <div class="card-body">
                                     <a href="?page=requests" class="text-decoration-none text-white card-hover">
-                                        <h2 data-i18n="admin.title">Trainee Requests</h2>
-                                        <p class="lead">Review & Accept/Reject</p>
+                                        <h2 data-i18n="home.trainee-requests.title"></h2>
+                                        <p class="lead" data-i18n="home.trainee-requests.description"></p>
                                     </a>
                                 </div>
                             </div>
@@ -116,8 +116,8 @@
                                 class="overlay-box overlay-hover py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4 text-white">
                                 <div class="card-body">
                                     <a href="?page=clearance" class="text-decoration-none text-white card-hover">
-                                        <h2 data-i18n="admin.title">Clearance</h2>
-                                        <p class="lead">Clearance</p>
+                                        <h2 data-i18n="home.clearance-admin.title"></h2>
+                                        <p class="lead" data-i18n="home.clearance-admin.description"></p>
                                     </a>
                                 </div>
                             </div>
@@ -129,8 +129,8 @@
                                 class="overlay-box overlay-hover py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4 text-white">
                                 <div class="card-body">
                                     <a href="?page=survey" class="text-decoration-none text-white card-hover">
-                                        <h2 data-i18n="admin.title">Survey</h2>
-                                        <p class="lead">ُEvaluation Trainees</p>
+                                        <h2 data-i18n="home.survey-admin.title"></h2>
+                                        <p class="lead" data-i18n="home.survey-admin.description"></p>
                                     </a>
                                 </div>
                             </div>
@@ -140,8 +140,8 @@
                                 class="overlay-box overlay-hover py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4 text-white">
                                 <div class="card-body">
                                     <a href="?page=accepted" class="text-decoration-none text-white card-hover">
-                                        <h2 data-i18n="admin.title">Accept Trainee</h2>
-                                        <p class="lead">Approve Trainee Request</p>
+                                        <h2 data-i18n="home.accept-trainee.title"></h2>
+                                        <p class="lead" data-i18n="home.accept-trainee.description"></p>
                                     </a>
                                 </div>
                             </div>
@@ -151,8 +151,8 @@
                                 class="overlay-box overlay-hover py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4 text-white">
                                 <div class="card-body">
                                     <a href="?page=rejected" class="text-decoration-none text-white card-hover">
-                                        <h2 data-i18n="admin.title">Reject Trainee</h2>
-                                        <p class="lead">Training Request Rejected</p>
+                                        <h2 data-i18n="home.reject-trainee.title"></h2>
+                                        <p class="lead" data-i18n="home.reject-trainee.description"></p>
                                     </a>
                                 </div>
                             </div>

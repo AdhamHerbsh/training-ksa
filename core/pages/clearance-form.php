@@ -40,45 +40,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Basic Validation
     if (empty($name_ar)) {
-        $errors[] = "Name in Arabic is required.";
+        $errors[] = $lang['clearance-form']['errors']['name-ar-required'] ?? "Name in Arabic is required.";
     }
     if (empty($name_en)) {
-        $errors[] = "Name in English is required.";
+        $errors[] = $lang['clearance-form']['errors']['name-en-required'] ?? "Name in English is required.";
     }
     if (empty($id_iqama_number) || strlen($id_iqama_number) !== 10) {
-        $errors[] = "ID/Iqama Number must be 10 digits.";
+        $errors[] = $lang['clearance-form']['errors']['id-iqama-number-invalid'] ?? "ID/Iqama Number must be 10 digits.";
     }
     if (empty($nationality)) {
-        $errors[] = "Nationality is required.";
+        $errors[] = $lang['clearance-form']['errors']['nationality-required'] ?? "Nationality is required.";
     }
     if (empty($mobile_number) || strlen($mobile_number) !== 9) {
-        $errors[] = "Mobile Number must be 9 digits.";
+        $errors[] = $lang['clearance-form']['errors']['mobile-number-invalid'] ?? "Mobile Number must be 9 digits.";
     }
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "A valid Email Address is required.";
+        $errors[] = $lang['clearance-form']['errors']['email-invalid'] ?? "A valid Email Address is required.";
     }
     if (empty($department)) {
-        $errors[] = "Department/Administration is required.";
+        $errors[] = $lang['clearance-form']['errors']['department-required'] ?? "Department/Administration is required.";
     }
     if (empty($job_title)) {
-        $errors[] = "Job Title is required.";
+        $errors[] = $lang['clearance-form']['errors']['job-title-required'] ?? "Job Title is required.";
     }
     if (empty($submission_date)) {
-        $errors[] = "Submission Date is required.";
+        $errors[] = $lang['clearance-form']['errors']['submission-date-required'] ?? "Submission Date is required.";
     }
     if (empty($work_card_expiry_date)) {
-        $errors[] = "Work Card Expiry Date is required.";
+        $errors[] = $lang['clearance-form']['errors']['work-card-expiry-date-required'] ?? "Work Card Expiry Date is required.";
     }
     if (empty($has_housing)) {
-        $errors[] = "Housing availability is required.";
+        $errors[] = $lang['clearance-form']['errors']['has-housing-required'] ?? "Housing availability is required.";
     }
     if (empty($administration_name)) {
-        $errors[] = "Administration Name is required.";
+        $errors[] = $lang['clearance-form']['errors']['administration-name-required'] ?? "Administration Name is required.";
     }
 
-
     // 2. Handle File Uploads
-    $upload_dir = 'uploads/clearance_documents/'; // Define your upload directory
+    $upload_dir = 'Uploads/clearance_documents/'; // Define your upload directory
     if (!is_dir($upload_dir)) {
         mkdir($upload_dir, 0755, true); // Create directory if it doesn't exist
     }
@@ -92,14 +91,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Validate file type and size
         $allowed_types = ['pdf', 'jpg', 'jpeg', 'png'];
         if (!in_array($imageFileType, $allowed_types)) {
-            $errors[] = "Only PDF, JPG, JPEG, PNG files are allowed for ID Photo.";
+            $errors[] = $lang['clearance-form']['errors']['id-photo-format'] ?? "Only PDF, JPG, JPEG, PNG files are allowed for ID Photo.";
         } elseif ($_FILES['id_photo']['size'] > 5 * 1024 * 1024) { // Max 5MB
-            $errors[] = "ID Photo file is too large. Max 5MB allowed.";
+            $errors[] = $lang['clearance-form']['errors']['id-photo-size'] ?? "ID Photo file is too large. Max 5MB allowed.";
         } else {
             if (move_uploaded_file($_FILES['id_photo']['tmp_name'], $target_file)) {
                 $id_photo_path = $target_file;
             } else {
-                $errors[] = "Failed to upload ID Photo.";
+                $errors[] = $lang['clearance-form']['errors']['id-photo-upload-failed'] ?? "Failed to upload ID Photo.";
             }
         }
     }
@@ -113,18 +112,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Validate file type and size
         $allowed_types = ['pdf', 'jpg', 'jpeg', 'png'];
         if (!in_array($imageFileType, $allowed_types)) {
-            $errors[] = "Only PDF, JPG, JPEG, PNG files are allowed for Work Card.";
+            $errors[] = $lang['clearance-form']['errors']['work-card-format'] ?? "Only PDF, JPG, JPEG, PNG files are allowed for Work Card.";
         } elseif ($_FILES['work_card']['size'] > 5 * 1024 * 1024) { // Max 5MB
-            $errors[] = "Work Card file is too large. Max 5MB allowed.";
+            $errors[] = $lang['clearance-form']['errors']['work-card-size'] ?? "Work Card file is too large. Max 5MB allowed.";
         } else {
             if (move_uploaded_file($_FILES['work_card']['tmp_name'], $target_file)) {
                 $work_card_path = $target_file;
             } else {
-                $errors[] = "Failed to upload Work Card.";
+                $errors[] = $lang['clearance-form']['errors']['work-card-upload-failed'] ?? "Failed to upload Work Card.";
             }
         }
     }
-
 
     // 3. Insert into Database if no errors
     if (empty($errors)) {
@@ -133,16 +131,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("isssssssssssssss", $user_id, $name_ar, $name_en, $id_iqama_number, $nationality, $country_code, $mobile_number, $email, $department, $job_title, $submission_date, $work_card_expiry_date, $has_housing, $id_photo_path, $work_card_path, $administration_name);
 
             if ($stmt->execute()) {
-                $success = "Clearance form submitted successfully!";
+                $success = $lang['clearance-form']['success-message'] ?? "Clearance form submitted successfully!";
                 // Optional: Clear form fields after successful submission
-                // header("Location: ?page=clearance-form&success=1"); // Redirect to prevent re-submission
-                // exit();
+                header("Location: ?page=clearance-form&success=1"); // Redirect to prevent re-submission
+                exit();
             } else {
-                $errors[] = "Database error: " . $stmt->error;
+                $errors[] = $lang['clearance-form']['errors']['database-error'] ?? "Database error: " . $stmt->error;
             }
             $stmt->close();
         } else {
-            $errors[] = "Failed to prepare the database statement: " . $conn->error;
+            $errors[] = $lang['clearance-form']['errors']['database-prepare-error'] ?? "Failed to prepare the database statement: " . $conn->error;
         }
     }
 }
@@ -151,131 +149,156 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 if (isset($conn) && $conn instanceof mysqli) {
     $conn->close();
 }
-// Note: If connection.php closes the connection, don't close it here.
-// Best practice is to close it where it's opened or in a shutdown function.
-// For simple scripts, closing it here is fine.
 
 ?>
+
+<?php if (isset($_GET['success']) && $_GET['success'] == 1) : ?>
+<section class="container text-center align-content-center">
+    <div class="overlay-box col-12 col-md-6 py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4">
+        <h1 class="display-5 text-white" data-i18n="clearance-form.success-message">
+            <?php echo $lang['clearance-form']['success-message'] ?? 'Form Submitted Successfully'; ?></h1>
+    </div>
+</section>
+<?php else: ?>
 
 <section class="container align-content-center h-100 w-100 m-auto">
     <div class="overlay-box py-4 px-4 m-auto shadow border border-1 border-secondary rounded-4">
         <form method="POST" enctype="multipart/form-data" onsubmit="return validateForm(event)">
-            <h1 class="h3 mb-4 fw-normal text-white text-center">Clearance Form</h1>
+            <h1 class="h3 mb-4 fw-normal text-white text-center" data-i18n="clearance-form.form-title">
+                <?php echo $lang['clearance-form']['form-title'] ?? 'Clearance Form'; ?></h1>
 
             <?php if (!empty($errors)): ?>
-                <div class="alert alert-danger">
-                    <?php foreach ($errors as $error): ?>
-                        <p class="error mb-0"><?php echo htmlspecialchars($error); ?></p>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
-            <?php if (!empty($success)): ?>
-                <div class="alert alert-success">
-                    <p class="success mb-0"><?php echo htmlspecialchars($success); ?></p>
-                </div>
+            <div class="alert alert-danger">
+                <?php foreach ($errors as $error): ?>
+                <p class="error mb-0"><?php echo htmlspecialchars($error); ?></p>
+                <?php endforeach; ?>
+            </div>
             <?php endif; ?>
 
             <div class="mb-4">
-                <h4 class="text-white mb-3">Personal Information</h4>
+                <h4 class="text-white mb-3" data-i18n="clearance-form.personal-info-heading">
+                    <?php echo $lang['clearance-form']['personal-info-heading'] ?? 'Personal Information'; ?></h4>
                 <div class="row g-3">
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="name_en" name="name_en"
-                                placeholder="Name in English" required
+                                data-i18n="[placeholder]clearance-form.name-en-placeholder" required
                                 value="<?php echo htmlspecialchars($_POST['name_en'] ?? ''); ?>">
-                            <label for="name_en">Name in English</label>
+                            <label for="name_en"
+                                data-i18n="clearance-form.name-en"><?php echo $lang['clearance-form']['name-en'] ?? 'Name in English'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="name_ar" name="name_ar"
-                                placeholder="Name in Arabic" required
+                                data-i18n="[placeholder]clearance-form.name-ar-placeholder" required
                                 value="<?php echo htmlspecialchars($_POST['name_ar'] ?? ''); ?>">
-                            <label for="name_ar">Name in Arabic</label>
+                            <label for="name_ar"
+                                data-i18n="clearance-form.name-ar"><?php echo $lang['clearance-form']['name-ar'] ?? 'Name in Arabic'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="id_iqama_number" name="id_iqama_number"
-                                placeholder="ID/Iqama Number" maxlength="10"
+                                data-i18n="[placeholder]clearance-form.id-iqama-number-placeholder" maxlength="10"
                                 oninput="this.value=this.value.replace(/[^0-9]/g,'')" required
                                 value="<?php echo htmlspecialchars($_POST['id_iqama_number'] ?? ''); ?>">
-                            <label for="id_iqama_number">ID/Iqama Number</label>
-                            <span class="note">* Must be 10 digits</span>
+                            <label for="id_iqama_number"
+                                data-i18n="clearance-form.id-iqama-number"><?php echo $lang['clearance-form']['id-iqama-number'] ?? 'ID/Iqama Number'; ?></label>
+                            <span class="note"
+                                data-i18n="clearance-form.id-iqama-number-note"><?php echo $lang['clearance-form']['id-iqama-number-note'] ?? '* Must be 10 digits'; ?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <select class="form-control" id="nationality" name="nationality" required>
-                                <option value="">Select Nationality</option>
-                                <option value="Saudi"
-                                    <?php echo (($_POST['nationality'] ?? '') == 'Saudi') ? 'selected' : ''; ?>>Saudi
+                                <option value="" data-i18n="clearance-form.select-nationality">
+                                    <?php echo $lang['clearance-form']['select-nationality'] ?? '-- Select Nationality --'; ?>
                                 </option>
+                                <option value="Saudi"
+                                    <?php echo (($_POST['nationality'] ?? '') == 'Saudi') ? 'selected' : ''; ?>
+                                    data-i18n="clearance-form.saudi">
+                                    <?php echo $lang['clearance-form']['saudi'] ?? 'Saudi'; ?></option>
                                 <option value="Non-Saudi"
-                                    <?php echo (($_POST['nationality'] ?? '') == 'Non-Saudi') ? 'selected' : ''; ?>>
-                                    Non-Saudi</option>
+                                    <?php echo (($_POST['nationality'] ?? '') == 'Non-Saudi') ? 'selected' : ''; ?>
+                                    data-i18n="clearance-form.non-saudi">
+                                    <?php echo $lang['clearance-form']['non-saudi'] ?? 'Non-Saudi'; ?></option>
                             </select>
-                            <label for="nationality">Nationality</label>
+                            <label for="nationality"
+                                data-i18n="clearance-form.nationality"><?php echo $lang['clearance-form']['nationality'] ?? 'Nationality'; ?></label>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="mb-4">
-                <h4 class="text-white mb-3">Contact Information</h4>
+                <h4 class="text-white mb-3" data-i18n="clearance-form.contact-info-heading">
+                    <?php echo $lang['clearance-form']['contact-info-heading'] ?? 'Contact Information'; ?></h4>
                 <div class="row g-3">
                     <div class="col-md-2">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="country_code" name="country_code" value="+966"
-                                maxlength="5" placeholder="Country Code" required readonly>
-                            <label for="country_code">Country Code</label>
+                                maxlength="5" data-i18n="[placeholder]clearance-form.country-code-placeholder" required
+                                readonly>
+                            <label for="country_code"
+                                data-i18n="clearance-form.country-code"><?php echo $lang['clearance-form']['country-code'] ?? 'Country Code'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="mobile_number" name="mobile_number"
-                                placeholder="Mobile Number" maxlength="9" pattern="\d{9}"
-                                oninput="this.value=this.value.replace(/[^0-9]/g,'')" required
+                                data-i18n="[placeholder]clearance-form.mobile-number-placeholder" maxlength="9"
+                                pattern="\d{9}" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required
                                 value="<?php echo htmlspecialchars($_POST['mobile_number'] ?? ''); ?>">
-                            <label for="mobile_number">Mobile Number</label>
-                            <span class="note">* Must be 9 digits after the country code</span>
+                            <label for="mobile_number"
+                                data-i18n="clearance-form.mobile-number"><?php echo $lang['clearance-form']['mobile-number'] ?? 'Mobile Number'; ?></label>
+                            <span class="note"
+                                data-i18n="clearance-form.mobile-number-note"><?php echo $lang['clearance-form']['mobile-number-note'] ?? '* Must be 9 digits after the country code'; ?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Email Address"
-                                required value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
-                            <label for="email">Email Address</label>
-                            <span class="note">* Please enter a valid email address</span>
+                            <input type="email" class="form-control" id="email" name="email"
+                                data-i18n="[placeholder]clearance-form.email-placeholder" required
+                                value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
+                            <label for="email"
+                                data-i18n="clearance-form.email"><?php echo $lang['clearance-form']['email'] ?? 'Email Address'; ?></label>
+                            <span class="note"
+                                data-i18n="clearance-form.email-note"><?php echo $lang['clearance-form']['email-note'] ?? '* Please enter a valid email address'; ?></span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="mb-4">
-                <h4 class="text-white mb-3">Professional Information</h4>
+                <h4 class="text-white mb-3" data-i18n="clearance-form.professional-info-heading">
+                    <?php echo $lang['clearance-form']['professional-info-heading'] ?? 'Professional Information'; ?>
+                </h4>
                 <div class="row g-3">
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="department" name="department"
-                                placeholder="Department/Administration" required
+                                data-i18n="[placeholder]clearance-form.department-placeholder" required
                                 value="<?php echo htmlspecialchars($_POST['department'] ?? ''); ?>">
-                            <label for="department">Department/Administration</label>
+                            <label for="department"
+                                data-i18n="clearance-form.department"><?php echo $lang['clearance-form']['department'] ?? 'Department/Administration'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="job_title" name="job_title"
-                                placeholder="Job Title" required
+                                data-i18n="[placeholder]clearance-form.job-title-placeholder" required
                                 value="<?php echo htmlspecialchars($_POST['job_title'] ?? ''); ?>">
-                            <label for="job_title">Job Title</label>
+                            <label for="job_title"
+                                data-i18n="clearance-form.job-title"><?php echo $lang['clearance-form']['job-title'] ?? 'Job Title'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input type="date" class="form-control" id="submission_date" name="submission_date" required
                                 value="<?php echo htmlspecialchars($_POST['submission_date'] ?? date('Y-m-d')); ?>">
-                            <label for="submission_date">Date</label>
+                            <label for="submission_date"
+                                data-i18n="clearance-form.submission-date"><?php echo $lang['clearance-form']['submission-date'] ?? 'Submission Date'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -283,37 +306,45 @@ if (isset($conn) && $conn instanceof mysqli) {
                             <input type="date" class="form-control" id="work_card_expiry_date"
                                 name="work_card_expiry_date" required
                                 value="<?php echo htmlspecialchars($_POST['work_card_expiry_date'] ?? ''); ?>">
-                            <label for="work_card_expiry_date">Work Card Expiry Date</label>
+                            <label for="work_card_expiry_date"
+                                data-i18n="clearance-form.work-card-expiry-date"><?php echo $lang['clearance-form']['work-card-expiry-date'] ?? 'Work Card Expiry Date'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <select class="form-control" id="has_housing" name="has_housing" required>
-                                <option value="">Housing Available?</option>
-                                <option value="Yes"
-                                    <?php echo (($_POST['has_housing'] ?? '') == 'Yes') ? 'selected' : ''; ?>>Yes
+                                <option value="" data-i18n="clearance-form.select-option">
+                                    <?php echo $lang['clearance-form']['select-option'] ?? '-- Select Option --'; ?>
                                 </option>
+                                <option value="Yes"
+                                    <?php echo (($_POST['has_housing'] ?? '') == 'Yes') ? 'selected' : ''; ?>
+                                    data-i18n="clearance-form.yes">
+                                    <?php echo $lang['clearance-form']['yes'] ?? 'Yes'; ?></option>
                                 <option value="No"
-                                    <?php echo (($_POST['has_housing'] ?? '') == 'No') ? 'selected' : ''; ?>>No</option>
+                                    <?php echo (($_POST['has_housing'] ?? '') == 'No') ? 'selected' : ''; ?>
+                                    data-i18n="clearance-form.no"><?php echo $lang['clearance-form']['no'] ?? 'No'; ?>
+                                </option>
                             </select>
-                            <label for="has_housing">Housing Available?</label>
+                            <label for="has_housing"
+                                data-i18n="clearance-form.has-housing"><?php echo $lang['clearance-form']['has-housing'] ?? 'Housing Provided'; ?></label>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="mb-4">
-                <h4 class="text-white mb-3">Required Documents</h4>
+                <h4 class="text-white mb-3" data-i18n="clearance-form.documents-upload-heading">
+                    <?php echo $lang['clearance-form']['documents-upload-heading'] ?? 'Required Documents'; ?></h4>
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label for="id_photo" class="form-label text-white small">ID Photo (PDF, JPG, or
-                            PNG)</label>
+                        <label for="id_photo" class="form-label"
+                            data-i18n="clearance-form.upload-id-photo"><?php echo $lang['clearance-form']['upload-id-photo'] ?? 'ID Photo (PDF, JPG, JPEG, PNG)'; ?></label>
                         <input type="file" class="form-control" id="id_photo" name="id_photo"
                             accept=".pdf,.jpg,.jpeg,.png">
                     </div>
                     <div class="col-md-6">
-                        <label for="work_card" class="form-label text-white small">Work Card (PDF, JPG, or
-                            PNG)</label>
+                        <label for="work_card" class="form-label"
+                            data-i18n="clearance-form.upload-work-card"><?php echo $lang['clearance-form']['upload-work-card'] ?? 'Work Card (PDF, JPG, JPEG, PNG)'; ?></label>
                         <input type="file" class="form-control" id="work_card" name="work_card"
                             accept=".pdf,.jpg,.jpeg,.png">
                     </div>
@@ -321,41 +352,63 @@ if (isset($conn) && $conn instanceof mysqli) {
             </div>
 
             <div class="mb-4">
-                <h4 class="text-white mb-3">Administration</h4>
+                <h4 class="text-white mb-3" data-i18n="clearance-form.admin-info-heading">
+                    <?php echo $lang['clearance-form']['admin-info-heading'] ?? 'Administration Information'; ?></h4>
                 <div class="row g-3">
                     <div class="col-md-12">
                         <div class="form-floating">
                             <select class="form-control" id="administration_name" name="administration_name" required>
-                                <option value="">Select Administration</option>
+                                <option value="" data-i18n="clearance-form.select-administration">
+                                    <?php echo $lang['clearance-form']['select-administration'] ?? 'Select Administration'; ?>
+                                </option>
                                 <option value="Nursing Education Administration"
-                                    <?php echo (($_POST['administration_name'] ?? '') == 'Nursing Education Administration') ? 'selected' : ''; ?>>
-                                    Nursing Education Administration</option>
+                                    <?php echo (($_POST['administration_name'] ?? '') == 'Nursing Education Administration') ? 'selected' : ''; ?>
+                                    data-i18n="clearance-form.administrations.nursing-education">
+                                    <?php echo $lang['clearance-form']['administrations']['nursing-education'] ?? 'Nursing Education Administration'; ?>
+                                </option>
                                 <option value="Health Training Administration"
-                                    <?php echo (($_POST['administration_name'] ?? '') == 'Health Training Administration') ? 'selected' : ''; ?>>
-                                    Health Training Administration</option>
+                                    <?php echo (($_POST['administration_name'] ?? '') == 'Health Training Administration') ? 'selected' : ''; ?>
+                                    data-i18n="clearance-form.administrations.health-training">
+                                    <?php echo $lang['clearance-form']['administrations']['health-training'] ?? 'Health Training Administration'; ?>
+                                </option>
                                 <option value="Medical Training Administration"
-                                    <?php echo (($_POST['administration_name'] ?? '') == 'Medical Training Administration') ? 'selected' : ''; ?>>
-                                    Medical Training Administration</option>
+                                    <?php echo (($_POST['administration_name'] ?? '') == 'Medical Training Administration') ? 'selected' : ''; ?>
+                                    data-i18n="clearance-form.administrations.medical-training">
+                                    <?php echo $lang['clearance-form']['administrations']['medical-training'] ?? 'Medical Training Administration'; ?>
+                                </option>
                                 <option value="Administrative Training Administration"
-                                    <?php echo (($_POST['administration_name'] ?? '') == 'Administrative Training Administration') ? 'selected' : ''; ?>>
-                                    Administrative Training Administration</option>
+                                    <?php echo (($_POST['administration_name'] ?? '') == 'Administrative Training Administration') ? 'selected' : ''; ?>
+                                    data-i18n="clearance-form.administrations.administrative-training">
+                                    <?php echo $lang['clearance-form']['administrations']['administrative-training'] ?? 'Administrative Training Administration'; ?>
+                                </option>
                                 <option value="Volunteering Administration"
-                                    <?php echo (($_POST['administration_name'] ?? '') == 'Volunteering Administration') ? 'selected' : ''; ?>>
-                                    Volunteering Administration</option>
+                                    <?php echo (($_POST['administration_name'] ?? '') == 'Volunteering Administration') ? 'selected' : ''; ?>
+                                    data-i18n="clearance-form.administrations.volunteering">
+                                    <?php echo $lang['clearance-form']['administrations']['volunteering'] ?? 'Volunteering Administration'; ?>
+                                </option>
                                 <option value="Contracting / Operation Administration"
-                                    <?php echo (($_POST['administration_name'] ?? '') == 'Contracting / Operation Administration') ? 'selected' : ''; ?>>
-                                    Contracting / Operation Administration</option>
+                                    <?php echo (($_POST['administration_name'] ?? '') == 'Contracting / Operation Administration') ? 'selected' : ''; ?>
+                                    data-i18n="clearance-form.administrations.contracting-operation">
+                                    <?php echo $lang['clearance-form']['administrations']['contracting-operation'] ?? 'Contracting / Operation Administration'; ?>
+                                </option>
                                 <option value="Family Medicine Academy"
-                                    <?php echo (($_POST['administration_name'] ?? '') == 'Family Medicine Academy') ? 'selected' : ''; ?>>
-                                    Family Medicine Academy</option>
+                                    <?php echo (($_POST['administration_name'] ?? '') == 'Family Medicine Academy') ? 'selected' : ''; ?>
+                                    data-i18n="clearance-form.administrations.family-medicine">
+                                    <?php echo $lang['clearance-form']['administrations']['family-medicine'] ?? 'Family Medicine Academy'; ?>
+                                </option>
                                 <option value="Healthcare Security Administration"
-                                    <?php echo (($_POST['administration_name'] ?? '') == 'Healthcare Security Administration') ? 'selected' : ''; ?>>
-                                    Healthcare Security Administration</option>
+                                    <?php echo (($_POST['administration_name'] ?? '') == 'Healthcare Security Administration') ? 'selected' : ''; ?>
+                                    data-i18n="clearance-form.administrations.healthcare-security">
+                                    <?php echo $lang['clearance-form']['administrations']['healthcare-security'] ?? 'Healthcare Security Administration'; ?>
+                                </option>
                                 <option value="Radiology Administration AAML"
-                                    <?php echo (($_POST['administration_name'] ?? '') == 'Radiology Administration AAML') ? 'selected' : ''; ?>>
-                                    Radiology Administration AAML</option>
+                                    <?php echo (($_POST['administration_name'] ?? '') == 'Radiology Administration AAML') ? 'selected' : ''; ?>
+                                    data-i18n="clearance-form.administrations.radiology">
+                                    <?php echo $lang['clearance-form']['administrations']['radiology'] ?? 'Radiology Administration AAML'; ?>
+                                </option>
                             </select>
-                            <label for="administration_name">Administration Name</label>
+                            <label for="administration_name"
+                                data-i18n="clearance-form.admin-name"><?php echo $lang['clearance-form']['admin-name'] ?? 'Administration Name'; ?></label>
                         </div>
                     </div>
                 </div>
@@ -363,12 +416,15 @@ if (isset($conn) && $conn instanceof mysqli) {
 
             <div class="row g-3 mt-4">
                 <div class="col-md-6">
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Submit Form</button>
+                    <button class="w-100 btn btn-lg btn-primary" type="submit"
+                        data-i18n="clearance-form.submit"><?php echo $lang['clearance-form']['submit'] ?? 'Submit Form'; ?></button>
                 </div>
                 <div class="col-md-6">
-                    <a href="?page=home" class="w-100 btn btn-lg btn-outline-secondary">Cancel</a>
+                    <a href="?page=home" class="w-100 btn btn-lg btn-outline-secondary"
+                        data-i18n="clearance-form.cancel"><?php echo $lang['clearance-form']['cancel'] ?? 'Cancel'; ?></a>
                 </div>
             </div>
         </form>
     </div>
 </section>
+<?php endif; ?>

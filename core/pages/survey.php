@@ -69,22 +69,23 @@ $conn->close();
                         </thead>
                         <tbody>
                             <?php if (empty($survey_data)): ?>
-                                <tr>
-                                    <td colspan="6" class="text-center border-bottom border-secondary">No survey data
-                                        available.</td>
-                                </tr>
+                            <tr>
+                                <td colspan="6" class="text-center border-bottom border-secondary"
+                                    data-i18n="survey.no-data-available">No survey data
+                                    available.</td>
+                            </tr>
                             <?php else: ?>
-                                <?php foreach ($survey_data as $row): ?>
-                                    <tr>
-                                        <td class="border-bottom border-secondary">
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span><?php echo htmlspecialchars($row['q1']); ?></span>
-                                            </div>
-                                        </td>
-                                        <td class="border-bottom border-secondary"><?php echo htmlspecialchars($row['q2']); ?>
-                                        </td>
-                                        <td class="border-bottom border-secondary">
-                                            <?php
+                            <?php foreach ($survey_data as $row): ?>
+                            <tr>
+                                <td class="border-bottom border-secondary">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span><?php echo htmlspecialchars($row['q1']); ?></span>
+                                    </div>
+                                </td>
+                                <td class="border-bottom border-secondary"><?php echo htmlspecialchars($row['q2']); ?>
+                                </td>
+                                <td class="border-bottom border-secondary">
+                                    <?php
                                             $badge_class = '';
                                             switch ($row['q3']) {
                                                 case 'Very Fast':
@@ -101,21 +102,21 @@ $conn->close();
                                                     break;
                                             }
                                             ?>
-                                            <span class="badge <?php echo $badge_class; ?>">
-                                                <?php echo htmlspecialchars($row['q3']); ?>
-                                            </span>
-                                        </td>
-                                        <td class="border-bottom border-secondary">
-                                            <?php echo !empty($row['problems']) ? '<span class="text-danger">' . htmlspecialchars($row['problems']) . '</span>' : '-'; ?>
-                                        </td>
-                                        <td class="border-bottom border-secondary">
-                                            <?php echo !empty($row['suggestions']) ? htmlspecialchars($row['suggestions']) : 'No suggestions'; ?>
-                                        </td>
-                                        <td class="border-bottom border-secondary">
-                                            <small><?php echo date('Y-m-d h:i a', strtotime($row['created_date'])); ?></small>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
+                                    <span class="badge <?php echo $badge_class; ?>">
+                                        <?php echo htmlspecialchars($row['q3']); ?>
+                                    </span>
+                                </td>
+                                <td class="border-bottom border-secondary">
+                                    <?php echo !empty($row['problems']) ? '<span class="text-danger">' . htmlspecialchars($row['problems']) . '</span>' : '-'; ?>
+                                </td>
+                                <td class="border-bottom border-secondary">
+                                    <?php echo !empty($row['suggestions']) ? htmlspecialchars($row['suggestions']) : 'No suggestions'; ?>
+                                </td>
+                                <td class="border-bottom border-secondary">
+                                    <small><?php echo date('Y-m-d h:i a', strtotime($row['created_date'])); ?></small>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
                             <?php endif; ?>
                         </tbody>
                     </table>

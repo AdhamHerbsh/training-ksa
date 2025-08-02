@@ -3,7 +3,6 @@
 require('core/db/connection.php');
 
 // --- Security and Authentication Checks ---
-// Check if user is authenticated
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ?auth=login");
     exit();
@@ -29,7 +28,7 @@ try {
     $stmt->close();
 } catch (mysqli_sql_exception $e) {
     error_log("Database error fetching trainee data: " . $e->getMessage());
-    $_SESSION['error_message'] = "Could not retrieve application data. Please try again later.";
+    $_SESSION['error_message'] = $lang['tracking']['errors']['database-error'] ?? "Could not retrieve application data. Please try again later.";
 }
 
 $conn->close();
@@ -63,8 +62,8 @@ if ($application_found) {
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10 col-xl-8">
                 <div class="overlay-box py-4 px-4 shadow border border-1 border-secondary rounded-4">
-                    <h1 class="h3 mb-4 fw-normal text-white text-center" data-i18n="tracking.title">Application Tracking
-                    </h1>
+                    <h1 class="h3 mb-4 fw-normal text-white text-center" data-i18n="tracking.title">
+                        <?php echo $lang['tracking']['title'] ?? 'Application Tracking'; ?></h1>
 
                     <?php if (isset($_SESSION['error_message'])): ?>
                     <div class="alert alert-danger text-center mb-4" role="alert">
@@ -77,13 +76,15 @@ if ($application_found) {
                     <div class="text-center py-5">
                         <div class="text-muted">
                             <i class="bi bi-search fs-1 mb-3 d-block text-white-50"></i>
-                            <h4 class="text-white-50" data-i18n="tracking.no-application">No Application Found</h4>
+                            <h4 class="text-white-50" data-i18n="tracking.no-application">
+                                <?php echo $lang['tracking']['no-application'] ?? 'No Application Found'; ?></h4>
                             <p class="text-white-50" data-i18n="tracking.no-application-hint">
-                                You haven't submitted any training application yet.
+                                <?php echo $lang['tracking']['no-application-hint'] ?? 'You haven\'t submitted any training application yet.'; ?>
                             </p>
                             <a href="?page=training-form" class="btn btn-primary mt-3">
                                 <i class="bi bi-plus-circle me-2"></i>
-                                <span data-i18n="tracking.apply-now">Apply Now</span>
+                                <span
+                                    data-i18n="tracking.apply-now"><?php echo $lang['tracking']['apply-now'] ?? 'Apply Now'; ?></span>
                             </a>
                         </div>
                     </div>
@@ -116,7 +117,8 @@ if ($application_found) {
                                     <?php endif; ?>
                                 </div>
                                 <div id="label1" class="step-label text-white fw-bold" style="font-size: 0.85rem;"
-                                    data-i18n="tracking.step1">Received</div>
+                                    data-i18n="tracking.step1"><?php echo $lang['tracking']['step1'] ?? 'Received'; ?>
+                                </div>
                                 <div class="text-white-50" style="font-size: 0.7rem;">
                                     <?php echo date('M d, Y', strtotime($trainee_data['created_at'])); ?>
                                 </div>
@@ -135,12 +137,13 @@ if ($application_found) {
                                     <?php endif; ?>
                                 </div>
                                 <div id="label2" class="step-label text-white fw-bold" style="font-size: 0.85rem;"
-                                    data-i18n="tracking.step2">Under Review</div>
+                                    data-i18n="tracking.step2">
+                                    <?php echo $lang['tracking']['step2'] ?? 'Under Review'; ?></div>
                                 <div class="text-white-50" style="font-size: 0.7rem;">
                                     <?php if ($step_status['review']): ?>
                                     <?php echo date('M d, Y', strtotime($trainee_data['updated_at'])); ?>
                                     <?php else: ?>
-                                    Pending
+                                    <?php echo $lang['tracking']['pending'] ?? 'Pending'; ?>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -162,12 +165,13 @@ if ($application_found) {
                                     <?php endif; ?>
                                 </div>
                                 <div id="label3" class="step-label text-white fw-bold" style="font-size: 0.85rem;"
-                                    data-i18n="tracking.step3">Decision</div>
+                                    data-i18n="tracking.step3"><?php echo $lang['tracking']['step3'] ?? 'Decision'; ?>
+                                </div>
                                 <div class="text-white-50" style="font-size: 0.7rem;">
                                     <?php if ($step_status['decision']): ?>
                                     <?php echo date('M d, Y', strtotime($trainee_data['updated_at'])); ?>
                                     <?php else: ?>
-                                    Pending
+                                    <?php echo $lang['tracking']['pending'] ?? 'Pending'; ?>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -182,28 +186,32 @@ if ($application_found) {
                             style="background: rgba(0, 0, 0, 0.5); border: 1px solid #444;">
                             <h5 class="text-white-50 text-start mb-3">
                                 <i class="bi bi-person-circle me-2"></i>
-                                <span data-i18n="tracking.application-details">Application Details</span>
+                                <span
+                                    data-i18n="tracking.application-details"><?php echo $lang['tracking']['application-details'] ?? 'Application Details'; ?></span>
                             </h5>
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="text" class="form-control"
                                             value="<?php echo htmlspecialchars($trainee_data['en_name']); ?>" readonly>
-                                        <label data-i18n="tracking.name">Name (English)</label>
+                                        <label
+                                            data-i18n="tracking.name"><?php echo $lang['tracking']['name'] ?? 'Name (English)'; ?></label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="text" class="form-control"
                                             value="<?php echo htmlspecialchars($trainee_data['ar_name']); ?>" readonly>
-                                        <label data-i18n="tracking.name-ar">Name (Arabic)</label>
+                                        <label
+                                            data-i18n="tracking.name-ar"><?php echo $lang['tracking']['name-ar'] ?? 'Name (Arabic)'; ?></label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="text" class="form-control"
                                             value="<?php echo htmlspecialchars($trainee_data['uni_id']); ?>" readonly>
-                                        <label data-i18n="tracking.student-id">University ID</label>
+                                        <label
+                                            data-i18n="tracking.student-id"><?php echo $lang['tracking']['student-id'] ?? 'University ID'; ?></label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -211,14 +219,16 @@ if ($application_found) {
                                         <input type="text" class="form-control"
                                             value="<?php echo htmlspecialchars($trainee_data['national_id']); ?>"
                                             readonly>
-                                        <label data-i18n="tracking.national-id">National ID</label>
+                                        <label
+                                            data-i18n="tracking.national-id"><?php echo $lang['tracking']['national-id'] ?? 'National ID'; ?></label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="text" class="form-control"
                                             value="<?php echo htmlspecialchars($trainee_data['major']); ?>" readonly>
-                                        <label data-i18n="tracking.major">Major</label>
+                                        <label
+                                            data-i18n="tracking.major"><?php echo $lang['tracking']['major'] ?? 'Major'; ?></label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -226,7 +236,8 @@ if ($application_found) {
                                         <input type="text" class="form-control"
                                             value="<?php echo htmlspecialchars($trainee_data['university']); ?>"
                                             readonly>
-                                        <label data-i18n="tracking.university">University</label>
+                                        <label
+                                            data-i18n="tracking.university"><?php echo $lang['tracking']['university'] ?? 'University'; ?></label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -234,14 +245,16 @@ if ($application_found) {
                                         <input type="tel" class="form-control"
                                             value="<?php echo htmlspecialchars($trainee_data['country_code'] . $trainee_data['mobile_number']); ?>"
                                             readonly>
-                                        <label data-i18n="tracking.mobile">Mobile Number</label>
+                                        <label
+                                            data-i18n="tracking.mobile"><?php echo $lang['tracking']['mobile'] ?? 'Mobile Number'; ?></label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="email" class="form-control"
                                             value="<?php echo htmlspecialchars($trainee_data['email']); ?>" readonly>
-                                        <label data-i18n="tracking.email">Email</label>
+                                        <label
+                                            data-i18n="tracking.email"><?php echo $lang['tracking']['email'] ?? 'Email'; ?></label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -249,14 +262,16 @@ if ($application_found) {
                                         <input type="text" class="form-control"
                                             value="<?php echo date('F d, Y', strtotime($trainee_data['created_at'])); ?>"
                                             readonly>
-                                        <label data-i18n="tracking.application-date">Application Date</label>
+                                        <label
+                                            data-i18n="tracking.application-date"><?php echo $lang['tracking']['application-date'] ?? 'Application Date'; ?></label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="text" class="form-control"
                                             value="<?php echo htmlspecialchars($trainee_data['center']); ?>" readonly>
-                                        <label data-i18n="tracking.training-center">Training Center</label>
+                                        <label
+                                            data-i18n="tracking.training-center"><?php echo $lang['tracking']['training-center'] ?? 'Training Center'; ?></label>
                                     </div>
                                 </div>
                             </div>
@@ -268,7 +283,8 @@ if ($application_found) {
                             style="background: rgba(0, 0, 0, 0.5); border: 1px solid #444;">
                             <h5 class="text-white-50 text-start mb-3">
                                 <i class="bi bi-search me-2"></i>
-                                <span data-i18n="tracking.review-status">Review Status</span>
+                                <span
+                                    data-i18n="tracking.review-status"><?php echo $lang['tracking']['review-status'] ?? 'Review Status'; ?></span>
                             </h5>
 
                             <?php if ($trainee_data['status'] == 'Pending'): ?>
@@ -276,10 +292,11 @@ if ($application_found) {
                                 <div class="d-flex align-items-center">
                                     <div class="spinner-border spinner-border-sm text-warning me-3" role="status"></div>
                                     <div>
-                                        <h6 class="mb-1" data-i18n="tracking.pending-title">Application Under Initial
-                                            Review</h6>
+                                        <h6 class="mb-1" data-i18n="tracking.pending-title">
+                                            <?php echo $lang['tracking']['pending-title'] ?? 'Application Under Initial Review'; ?>
+                                        </h6>
                                         <p class="mb-0 small" data-i18n="tracking.pending-message">
-                                            Your application has been received and is waiting for supervisor review.
+                                            <?php echo $lang['tracking']['pending-message'] ?? 'Your application has been received and is waiting for supervisor review.'; ?>
                                         </p>
                                     </div>
                                 </div>
@@ -289,11 +306,11 @@ if ($application_found) {
                                 <div class="d-flex align-items-center">
                                     <i class="bi bi-hourglass-split fs-4 text-info me-3"></i>
                                     <div>
-                                        <h6 class="mb-1" data-i18n="tracking.reviewed-title">Application Under Final
-                                            Review</h6>
+                                        <h6 class="mb-1" data-i18n="tracking.reviewed-title">
+                                            <?php echo $lang['tracking']['reviewed-title'] ?? 'Application Under Final Review'; ?>
+                                        </h6>
                                         <p class="mb-0 small" data-i18n="tracking.reviewed-message">
-                                            Your application is being evaluated by the training committee. You will be
-                                            notified once the decision is made.
+                                            <?php echo $lang['tracking']['reviewed-message'] ?? 'Your application is being evaluated by the training committee. You will be notified once the decision is made.'; ?>
                                         </p>
                                     </div>
                                 </div>
@@ -305,7 +322,8 @@ if ($application_found) {
                                     <div class="card bg-dark border-secondary">
                                         <div class="card-body text-center">
                                             <h6 class="card-title text-white-50" data-i18n="tracking.training-period">
-                                                Training Period</h6>
+                                                <?php echo $lang['tracking']['training-period'] ?? 'Training Period'; ?>
+                                            </h6>
                                             <p class="card-text text-white">
                                                 <?php echo date('M d', strtotime($trainee_data['start_date'])) . ' - ' . date('M d, Y', strtotime($trainee_data['end_date'])); ?>
                                             </p>
@@ -316,7 +334,7 @@ if ($application_found) {
                                     <div class="card bg-dark border-secondary">
                                         <div class="card-body text-center">
                                             <h6 class="card-title text-white-50" data-i18n="tracking.supervisor">
-                                                Supervisor</h6>
+                                                <?php echo $lang['tracking']['supervisor'] ?? 'Supervisor'; ?></h6>
                                             <p class="card-text text-white">
                                                 <?php echo htmlspecialchars($trainee_data['supervisor_name']); ?></p>
                                         </div>
@@ -331,7 +349,8 @@ if ($application_found) {
                             style="background: rgba(0, 0, 0, 0.5); border: 1px solid #444;">
                             <h5 class="text-white-50 text-start mb-3">
                                 <i class="bi bi-clipboard-check me-2"></i>
-                                <span data-i18n="tracking.application-result">Application Result</span>
+                                <span
+                                    data-i18n="tracking.application-result"><?php echo $lang['tracking']['application-result'] ?? 'Application Result'; ?></span>
                             </h5>
 
                             <?php if ($trainee_data['status'] == 'Accepted'): ?>
@@ -339,19 +358,20 @@ if ($application_found) {
                                 <div style="font-size: 3rem; color: #28a745;">
                                     <i class="bi bi-check-circle-fill"></i>
                                 </div>
-                                <h3 class="text-success mt-2" data-i18n="tracking.accepted-title">Congratulations!</h3>
+                                <h3 class="text-success mt-2" data-i18n="tracking.accepted-title">
+                                    <?php echo $lang['tracking']['accepted-title'] ?? 'Congratulations!'; ?></h3>
                                 <p class="text-white-50" data-i18n="tracking.accepted-message">
-                                    Your training application has been accepted. Please confirm your participation
-                                    below.
+                                    <?php echo $lang['tracking']['accepted-message'] ?? 'Your training application has been accepted. Please confirm your participation below.'; ?>
                                 </p>
                             </div>
 
                             <?php if (empty($trainee_data['trainee_response'])): ?>
                             <!-- Trainee Response Buttons -->
                             <div class="alert alert-info">
-                                <h6 class="mb-2" data-i18n="tracking.response-required">Response Required</h6>
+                                <h6 class="mb-2" data-i18n="tracking.response-required">
+                                    <?php echo $lang['tracking']['response-required'] ?? 'Response Required'; ?></h6>
                                 <p class="mb-0 small" data-i18n="tracking.response-message">
-                                    Please confirm whether you accept or reject this training opportunity.
+                                    <?php echo $lang['tracking']['response-message'] ?? 'Please confirm whether you accept or reject this training opportunity.'; ?>
                                 </p>
                             </div>
 
@@ -360,14 +380,16 @@ if ($application_found) {
                                     <button class="w-100 btn btn-lg btn-success" id="acceptTraining"
                                         data-id="<?php echo $trainee_data['id']; ?>">
                                         <i class="bi bi-check-circle me-2"></i>
-                                        <span data-i18n="tracking.accept-training">Accept Training</span>
+                                        <span
+                                            data-i18n="tracking.accept-training"><?php echo $lang['tracking']['accept-training'] ?? 'Accept Training'; ?></span>
                                     </button>
                                 </div>
                                 <div class="col-md-6">
                                     <button class="w-100 btn btn-lg btn-outline-danger" id="rejectTraining"
                                         data-id="<?php echo $trainee_data['id']; ?>">
                                         <i class="bi bi-x-circle me-2"></i>
-                                        <span data-i18n="tracking.reject-training">Reject Training</span>
+                                        <span
+                                            data-i18n="tracking.reject-training"><?php echo $lang['tracking']['reject-training'] ?? 'Reject Training'; ?></span>
                                     </button>
                                 </div>
                             </div>
@@ -379,14 +401,15 @@ if ($application_found) {
                                     <i
                                         class="bi bi-<?php echo $trainee_data['trainee_response'] == 'Accepted' ? 'check-circle-fill' : 'x-circle-fill'; ?> fs-4 me-3"></i>
                                     <div>
-                                        <h6 class="mb-1">
-                                            <?php echo $trainee_data['trainee_response'] == 'Accepted' ? 'Training Accepted' : 'Training Rejected'; ?>
+                                        <h6 class="mb-1"
+                                            data-i18n="tracking.trainee-response.<?php echo strtolower($trainee_data['trainee_response']); ?>">
+                                            <?php echo $lang['tracking']['trainee-response'][strtolower($trainee_data['trainee_response'])] ?? ($trainee_data['trainee_response'] == 'Accepted' ? 'Training Accepted' : 'Training Rejected'); ?>
                                         </h6>
-                                        <p class="mb-0 small">
-                                            You have <?php echo strtolower($trainee_data['trainee_response']); ?> this
-                                            training opportunity.
+                                        <p class="mb-0 small"
+                                            data-i18n="tracking.response-details.<?php echo strtolower($trainee_data['trainee_response']); ?>">
+                                            <?php echo $lang['tracking']['response-details'][strtolower($trainee_data['trainee_response'])] ?? 'You have ' . strtolower($trainee_data['trainee_response']) . ' this training opportunity.'; ?>
                                             <?php if (!empty($trainee_data['response_date'])): ?>
-                                            <br>Response Date:
+                                            <br><?php echo $lang['tracking']['response-date'] ?? 'Response Date'; ?>:
                                             <?php echo date('F d, Y g:i A', strtotime($trainee_data['response_date'])); ?>
                                             <?php endif; ?>
                                         </p>
@@ -400,24 +423,27 @@ if ($application_found) {
                                 <div style="font-size: 3rem; color: #dc3545;">
                                     <i class="bi bi-x-circle-fill"></i>
                                 </div>
-                                <h3 class="text-danger mt-2" data-i18n="tracking.rejected-title">Application Not
-                                    Accepted</h3>
+                                <h3 class="text-danger mt-2" data-i18n="tracking.rejected-title">
+                                    <?php echo $lang['tracking']['rejected-title'] ?? 'Application Not Accepted'; ?>
+                                </h3>
                                 <p class="text-white-50" data-i18n="tracking.rejected-message">
-                                    Unfortunately, your training application was not accepted at this time.
+                                    <?php echo $lang['tracking']['rejected-message'] ?? 'Unfortunately, your training application was not accepted at this time.'; ?>
                                 </p>
                             </div>
 
                             <div class="alert alert-info">
-                                <h6 class="mb-2" data-i18n="tracking.reapply-title">You can apply again</h6>
+                                <h6 class="mb-2" data-i18n="tracking.reapply-title">
+                                    <?php echo $lang['tracking']['reapply-title'] ?? 'You can apply again'; ?></h6>
                                 <p class="mb-0 small" data-i18n="tracking.reapply-message">
-                                    Don't give up! You can submit a new application for future training periods.
+                                    <?php echo $lang['tracking']['reapply-message'] ?? 'Don\'t give up! You can submit a new application for future training periods.'; ?>
                                 </p>
                             </div>
 
                             <div class="text-center mt-3">
                                 <a href="?page=apply" class="btn btn-primary">
                                     <i class="bi bi-plus-circle me-2"></i>
-                                    <span data-i18n="tracking.apply-again">Apply Again</span>
+                                    <span
+                                        data-i18n="tracking.apply-again"><?php echo $lang['tracking']['apply-again'] ?? 'Apply Again'; ?></span>
                                 </a>
                             </div>
                             <?php endif; ?>
@@ -429,7 +455,8 @@ if ($application_found) {
                                         <input type="text" class="form-control"
                                             value="TR-<?php echo str_pad($trainee_data['id'], 6, '0', STR_PAD_LEFT); ?>"
                                             readonly>
-                                        <label data-i18n="tracking.application-number">Application Number</label>
+                                        <label
+                                            data-i18n="tracking.application-number"><?php echo $lang['tracking']['application-number'] ?? 'Application Number'; ?></label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -437,7 +464,8 @@ if ($application_found) {
                                         <input type="text" class="form-control"
                                             value="<?php echo date('F d, Y', strtotime($trainee_data['created_at'])); ?>"
                                             readonly>
-                                        <label data-i18n="tracking.application-date">Application Date</label>
+                                        <label
+                                            data-i18n="tracking.application-date"><?php echo $lang['tracking']['application-date'] ?? 'Application Date'; ?></label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -445,14 +473,16 @@ if ($application_found) {
                                         <input type="text" class="form-control"
                                             value="<?php echo date('F d, Y', strtotime($trainee_data['updated_at'])); ?>"
                                             readonly>
-                                        <label data-i18n="tracking.last-updated">Last Updated</label>
+                                        <label
+                                            data-i18n="tracking.last-updated"><?php echo $lang['tracking']['last-updated'] ?? 'Last Updated'; ?></label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="text" class="form-control"
                                             value="<?php echo htmlspecialchars($trainee_data['status']); ?>" readonly>
-                                        <label data-i18n="tracking.current-status">Current Status</label>
+                                        <label
+                                            data-i18n="tracking.current-status"><?php echo $lang['tracking']['current-status'] ?? 'Current Status'; ?></label>
                                     </div>
                                 </div>
                             </div>
@@ -503,7 +533,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (acceptBtn) {
         acceptBtn.addEventListener('click', function() {
             const traineeId = this.dataset.id;
-            if (confirm('Are you sure you want to accept this training opportunity?')) {
+            if (confirm(
+                    '<?php echo $lang['tracking']['confirm-accept'] ?? 'Are you sure you want to accept this training opportunity?'; ?>'
+                    )) {
                 sendTraineeResponse(traineeId, 'Accepted');
             }
         });
@@ -513,8 +545,8 @@ document.addEventListener('DOMContentLoaded', function() {
         rejectBtn.addEventListener('click', function() {
             const traineeId = this.dataset.id;
             if (confirm(
-                    'Are you sure you want to reject this training opportunity? This action cannot be undone.'
-                )) {
+                    '<?php echo $lang['tracking']['confirm-reject'] ?? 'Are you sure you want to reject this training opportunity? This action cannot be undone.'; ?>'
+                    )) {
                 sendTraineeResponse(traineeId, 'Rejected');
             }
         });
@@ -547,19 +579,25 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (rejectBtn) rejectBtn.disabled = false;
                     }
                 } catch (e) {
-                    showAlert('Invalid response from server', 'danger');
+                    showAlert(
+                        '<?php echo $lang['tracking']['errors']['invalid-response'] ?? 'Invalid response from server'; ?>',
+                        'danger');
                     if (acceptBtn) acceptBtn.disabled = false;
                     if (rejectBtn) rejectBtn.disabled = false;
                 }
             } else {
-                showAlert(`Server error: ${xhr.status}`, 'danger');
+                showAlert(
+                    `<?php echo $lang['tracking']['errors']['server-error'] ?? 'Server error: '; ?>${xhr.status}`,
+                    'danger');
                 if (acceptBtn) acceptBtn.disabled = false;
                 if (rejectBtn) rejectBtn.disabled = false;
             }
         };
 
         xhr.onerror = function() {
-            showAlert('Network error. Could not connect to server.', 'danger');
+            showAlert(
+                '<?php echo $lang['tracking']['errors']['network-error'] ?? 'Network error. Could not connect to server.'; ?>',
+                'danger');
             if (acceptBtn) acceptBtn.disabled = false;
             if (rejectBtn) rejectBtn.disabled = false;
         };

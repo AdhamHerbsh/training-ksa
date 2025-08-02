@@ -9,19 +9,17 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // --- Security and Authentication Checks ---
-// Check if user is authenticated
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: ?auth=login"); // Redirect to login page
+    header("Location: ?auth=login");
     exit();
 }
 
-// Check if user is a Trainee
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Trainee') {
-    header("Location: ?page=home"); // Redirect if not a Trainee
+    header("Location: ?page=home");
     exit();
 }
 
-$user_id = $_SESSION['user_id'] ?? null; // Get user_id from session
+$user_id = $_SESSION['user_id'] ?? null;
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $user_id) {
@@ -47,54 +45,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $user_id) {
     $supervisor_email = isset($_POST['supervisor_email']) ? filter_var($_POST['supervisor_email'], FILTER_VALIDATE_EMAIL) : false;
     $center = isset($_POST['center']) ? trim(htmlspecialchars($_POST['center'])) : '';
 
-    // Basic validation (more comprehensive validation would be needed for a production app)
-    if (!$ar_name) $errors[] = "Name in Arabic is required.";
-    if (!$en_name) $errors[] = "Name in English is required.";
-    if (!$national_id) $errors[] = "National ID is required.";
-    if ($age === false) $errors[] = "Invalid age. Must be between 15 and 100.";
-    if (!$mobile_number || !preg_match("/^\d{9}$/", $mobile_number)) $errors[] = "Mobile number must be 9 digits.";
-    if (!$email) $errors[] = "Invalid email address.";
-    if (!$country) $errors[] = "Country is required.";
-    if (!in_array($gender, ['Male', 'Female'])) $errors[] = "Invalid gender selection.";
-    if (!$university) $errors[] = "University name is required.";
-    if (!$uni_id) $errors[] = "University ID is required.";
-    if (!$major) $errors[] = "Major is required.";
-    if (!$degree) $errors[] = "Degree is required.";
-    if (!$start_date) $errors[] = "Training start date is required.";
-    if (!$end_date) $errors[] = "Training end date is required.";
-    if (strtotime($start_date) > strtotime($end_date)) $errors[] = "End date cannot be before start date.";
-    if (!$supervisor_name) $errors[] = "Academic Supervisor Name is required.";
-    if (!$supervisor_email) $errors[] = "Invalid Academic Supervisor Email address.";
-    if (!$center) $errors[] = "Center selection is required.";
+    // Validation
+    if (!$ar_name) $errors[] = $lang['training-form']['errors']['name-ar-required'] ?? "Name in Arabic is required.";
+    if (!$en_name) $errors[] = $lang['training-form']['errors']['name-en-required'] ?? "Name in English is required.";
+    if (!$national_id) $errors[] = $lang['training-form']['errors']['national-id-required'] ?? "National ID is required.";
+    if ($age === false) $errors[] = $lang['training-form']['errors']['invalid-age'] ?? "Invalid age. Must be between 15 and 100.";
+    if (!$mobile_number || !preg_match("/^\d{9}$/", $mobile_number)) $errors[] = $lang['training-form']['errors']['invalid-mobile'] ?? "Mobile number must be 9 digits.";
+    if (!$email) $errors[] = $lang['training-form']['errors']['invalid-email'] ?? "Invalid email address.";
+    if (!$country) $errors[] = $lang['training-form']['errors']['country-required'] ?? "Country is required.";
+    if (!in_array($gender, ['Male', 'Female'])) $errors[] = $lang['training-form']['errors']['invalid-gender'] ?? "Invalid gender selection.";
+    if (!$university) $errors[] = $lang['training-form']['errors']['university-required'] ?? "University name is required.";
+    if (!$uni_id) $errors[] = $lang['training-form']['errors']['university-id-required'] ?? "University ID is required.";
+    if (!$major) $errors[] = $lang['training-form']['errors']['major-required'] ?? "Major is required.";
+    if (!$degree) $errors[] = $lang['training-form']['errors']['degree-required'] ?? "Degree is required.";
+    if (!$start_date) $errors[] = $lang['training-form']['errors']['start-date-required'] ?? "Training start date is required.";
+    if (!$end_date) $errors[] = $lang['training-form']['errors']['end-date-required'] ?? "Training end date is required.";
+    if (strtotime($start_date) > strtotime($end_date)) $errors[] = $lang['training-form']['errors']['invalid-date-range'] ?? "End date cannot be before start date.";
+    if (!$supervisor_name) $errors[] = $lang['training-form']['errors']['supervisor-name-required'] ?? "Academic Supervisor Name is required.";
+    if (!$supervisor_email) $errors[] = $lang['training-form']['errors']['invalid-supervisor-email'] ?? "Invalid Academic Supervisor Email address.";
+    if (!$center) $errors[] = $lang['training-form']['errors']['center-required'] ?? "Center selection is required.";
 
     // File uploads
     $training_letter_path = null;
     $cv_path = null;
-    $target_dir = "uploads/"; // Make sure this directory exists and is writable
+    $target_dir = "Uploads/";
 
     if (!file_exists($target_dir)) {
         mkdir($target_dir, 0777, true);
     }
 
-    // Handle Training Letter upload
     if (isset($_FILES['training_letter']) && $_FILES['training_letter']['error'] == UPLOAD_ERR_OK) {
         $file_name = uniqid('letter_') . '_' . basename($_FILES['training_letter']['name']);
         $training_letter_path = $target_dir . $file_name;
         $file_type = mime_content_type($_FILES['training_letter']['tmp_name']);
         if ($file_type == 'application/pdf') {
             if (!move_uploaded_file($_FILES['training_letter']['tmp_name'], $training_letter_path)) {
-                $errors[] = "Failed to upload training letter.";
-                $training_letter_path = null; // Reset path if upload fails
+                $errors[] = $lang['training-form']['errors']['training-letter-upload-failed'] ?? "Failed to upload training letter.";
+                $training_letter_path = null;
             }
         } else {
-            $errors[] = "Training letter must be a PDF.";
+            $errors[] = $lang['training-form']['errors']['training-letter-pdf-only'] ?? "Training letter must be a PDF.";
             $training_letter_path = null;
         }
     } else {
-        $errors[] = "Training letter is required.";
+        $errors[] = $lang['training-form']['errors']['training-letter-required'] ?? "Training letter is required.";
     }
 
-    // Handle CV upload
     if (isset($_FILES['cv']) && $_FILES['cv']['error'] == UPLOAD_ERR_OK) {
         $file_name = uniqid('cv_') . '_' . basename($_FILES['cv']['name']);
         $cv_path = $target_dir . $file_name;
@@ -102,246 +98,274 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $user_id) {
         $allowed_types = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
         if (in_array($file_type, $allowed_types)) {
             if (!move_uploaded_file($_FILES['cv']['tmp_name'], $cv_path)) {
-                $errors[] = "Failed to upload CV.";
-                $cv_path = null; // Reset path if upload fails
+                $errors[] = $lang['training-form']['errors']['cv-upload-failed'] ?? "Failed to upload CV.";
+                $cv_path = null;
             }
         } else {
-            $errors[] = "CV must be a PDF, DOC, or DOCX.";
+            $errors[] = $lang['training-form']['errors']['cv-format'] ?? "CV must be a PDF, DOC, or DOCX.";
             $cv_path = null;
         }
     } else {
-        $errors[] = "Curriculum Vitae (CV) is required.";
+        $errors[] = $lang['training-form']['errors']['cv-required'] ?? "Curriculum Vitae (CV) is required.";
     }
-
 
     if (empty($errors)) {
         try {
-            // Use prepared statements to prevent SQL injection
             $stmt = $conn->prepare("INSERT INTO trainees (user_id, ar_name, en_name, national_id, age, country_code, mobile_number, email, country, gender, university, uni_id, major, degree, start_date, end_date, supervisor_name, supervisor_email, center, training_letter_path, cv_path, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending')");
             $stmt->bind_param("isssissssssssssssssss", $user_id, $ar_name, $en_name, $national_id, $age, $country_code, $mobile_number, $email, $country, $gender, $university, $uni_id, $major, $degree, $start_date, $end_date, $supervisor_name, $supervisor_email, $center, $training_letter_path, $cv_path);
 
             if ($stmt->execute()) {
-                $_SESSION['success_message'] = "Registration submitted successfully!";
-                // Consider redirecting to a success page or home page
+                $_SESSION['success_message'] = $lang['training-form']['success-message'] ?? "Registration submitted successfully!";
                 header("Location: ?page=home");
-                // exit();
+                exit();
             } else {
-                $_SESSION['error_message'] = "Error: " . $stmt->error;
+                $_SESSION['error_message'] = $lang['training-form']['errors']['database-error'] ?? "Error: " . $stmt->error;
             }
             $stmt->close();
         } catch (mysqli_sql_exception $e) {
-            // Check for duplicate national_id error (Error code 1062 for MySQL duplicate entry)
             if ($e->getCode() == 1062) {
-                $_SESSION['error_message'] = "Registration failed: A trainee with this National ID already exists.";
+                $_SESSION['error_message'] = $lang['training-form']['errors']['duplicate-national-id'] ?? "Registration failed: A trainee with this National ID already exists.";
             } else {
-                $_SESSION['error_message'] = "Database error: " . $e->getMessage();
+                $_SESSION['error_message'] = $lang['training-form']['errors']['database-error'] ?? "Database error: " . $e->getMessage();
             }
         }
     } else {
         $_SESSION['error_message'] = implode("<br>", $errors);
     }
-    // Store submitted data in session to repopulate form if there are errors
     $_SESSION['form_data'] = $_POST;
-    header("Location: ?page=training-form "); // Redirect to the same page to show messages
+    header("Location: ?page=training-form");
     exit();
 }
 
-// Clear form data from session after displaying
 $form_data = $_SESSION['form_data'] ?? [];
 unset($_SESSION['form_data']);
-
 ?>
-
 
 <section class="container align-content-center h-100 w-100 m-auto">
     <div class="overlay-box py-4 px-4 m-auto shadow border border-1 border-secondary rounded-4">
-        <h1 class="h3 mb-4 fw-normal text-white text-center">Trainee Registration Form</h1>
+        <h1 class="h3 mb-4 fw-normal text-white text-center" data-i18n="training-form.form-title">
+            <?php echo $lang['training-form']['form-title'] ?? 'Trainee Registration Form'; ?></h1>
 
         <?php if (isset($_SESSION['success_message'])): ?>
-            <div class="alert alert-success text-center" role="alert">
-                <?php echo $_SESSION['success_message'];
+        <div class="alert alert-success text-center" role="alert" data-i18n="training-form.success-message">
+            <?php echo $_SESSION['success_message'];
                 unset($_SESSION['success_message']); ?>
-            </div>
+        </div>
         <?php endif; ?>
 
         <?php if (isset($_SESSION['error_message'])): ?>
-            <div class="alert alert-danger text-center" role="alert">
-                <?php echo $_SESSION['error_message'];
+        <div class="alert alert-danger text-center" role="alert">
+            <?php echo $_SESSION['error_message'];
                 unset($_SESSION['error_message']); ?>
-            </div>
+        </div>
         <?php endif; ?>
 
         <form method="POST" action="" enctype="multipart/form-data">
             <div class="mb-4">
-                <h5 class="text-white mb-3">Personal Information</h5>
+                <h5 class="text-white mb-3" data-i18n="training-form.personal-info-heading">
+                    <?php echo $lang['training-form']['personal-info-heading'] ?? 'Personal Information'; ?></h5>
                 <div class="row g-3">
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="en-name" name="en_name"
-                                placeholder="Name in English" required
-                                value="<?php echo htmlspecialchars($form_data['en_name'] ?? ''); ?>">
-                            <label for="en-name">Name in English</label>
+                                placeholder="<?php echo $lang['training-form']['full-name-en-placeholder'] ?? 'Name in English'; ?>"
+                                required value="<?php echo htmlspecialchars($form_data['en_name'] ?? ''); ?>">
+                            <label for="en-name"
+                                data-i18n="training-form.full-name-en"><?php echo $lang['training-form']['full-name-en'] ?? 'Name in English'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="ar-name" name="ar_name"
-                                placeholder="Name in Arabic" required
-                                value="<?php echo htmlspecialchars($form_data['ar_name'] ?? ''); ?>">
-                            <label for="ar-name">Name in Arabic</label>
+                                placeholder="<?php echo $lang['training-form']['full-name-ar-placeholder'] ?? 'Name in Arabic'; ?>"
+                                required value="<?php echo htmlspecialchars($form_data['ar_name'] ?? ''); ?>">
+                            <label for="ar-name"
+                                data-i18n="training-form.full-name-ar"><?php echo $lang['training-form']['full-name-ar'] ?? 'Name in Arabic'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="national-id" name="national_id"
-                                placeholder="National ID" required
-                                value="<?php echo htmlspecialchars($form_data['national_id'] ?? ''); ?>">
-                            <label for="national-id">National ID</label>
+                                placeholder="<?php echo $lang['training-form']['national-id-placeholder'] ?? 'National ID'; ?>"
+                                required value="<?php echo htmlspecialchars($form_data['national_id'] ?? ''); ?>">
+                            <label for="national-id"
+                                data-i18n="training-form.national-id"><?php echo $lang['training-form']['national-id'] ?? 'National ID'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input type="number" class="form-control" id="age" name="age" placeholder="Age" min="15"
+                            <input type="number" class="form-control" id="age" name="age"
+                                placeholder="<?php echo $lang['training-form']['age-placeholder'] ?? 'Age'; ?>" min="15"
                                 max="100" required value="<?php echo htmlspecialchars($form_data['age'] ?? ''); ?>">
-                            <label for="age">Age</label>
+                            <label for="age"
+                                data-i18n="training-form.age"><?php echo $lang['training-form']['age'] ?? 'Age'; ?></label>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="mb-4">
-                <h5 class="text-white mb-3">Contact Information</h5>
+                <h5 class="text-white mb-3" data-i18n="training-form.contact-info-heading">
+                    <?php echo $lang['training-form']['contact-info-heading'] ?? 'Contact Information'; ?></h5>
                 <div class="row g-3">
                     <div class="col-md-2">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="country_code" name="country_code" value="+966"
-                                maxlength="5" placeholder="Country Code" required readonly>
-                            <label for="country_code">Country Code</label>
+                                maxlength="5"
+                                placeholder="<?php echo $lang['training-form']['country-code-placeholder'] ?? 'Country Code'; ?>"
+                                required readonly>
+                            <label for="country_code"
+                                data-i18n="training-form.country-code"><?php echo $lang['training-form']['country-code'] ?? 'Country Code'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="mobile_number" name="mobile_number"
-                                placeholder="Mobile Number" maxlength="9" pattern="\d{9}"
-                                oninput="this.value=this.value.replace(/[^0-9]/g,'')" required
-                                value="<?php echo htmlspecialchars($form_data['mobile_number'] ?? ''); ?>">
-                            <label for="mobile_number">Mobile Number</label>
-                            <span class="note">* Must be 9 digits after the country code</span>
+                                placeholder="<?php echo $lang['training-form']['mobile-number-placeholder'] ?? 'Mobile Number'; ?>"
+                                maxlength="9" pattern="\d{9}" oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                                required value="<?php echo htmlspecialchars($form_data['mobile_number'] ?? ''); ?>">
+                            <label for="mobile_number"
+                                data-i18n="training-form.mobile-number"><?php echo $lang['training-form']['mobile-number'] ?? 'Mobile Number'; ?></label>
+                            <span class="note"
+                                data-i18n="training-form.mobile-number-note"><?php echo $lang['training-form']['mobile-number-note'] ?? '* Must be 9 digits after the country code'; ?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Email Address"
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="<?php echo $lang['training-form']['email-placeholder'] ?? 'Email Address'; ?>"
                                 required value="<?php echo htmlspecialchars($form_data['email'] ?? ''); ?>">
-                            <label for="email">Email Address</label>
+                            <label for="email"
+                                data-i18n="training-form.email"><?php echo $lang['training-form']['email'] ?? 'Email Address'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="country" name="country" placeholder="Country"
+                            <input type="text" class="form-control" id="country" name="country"
+                                placeholder="<?php echo $lang['training-form']['country-placeholder'] ?? 'Country'; ?>"
                                 required value="<?php echo htmlspecialchars($form_data['country'] ?? ''); ?>">
-                            <label for="country">Country</label>
+                            <label for="country"
+                                data-i18n="training-form.country"><?php echo $lang['training-form']['country'] ?? 'Country'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <select class="form-select" id="gender-select" name="gender" required>
-                                <option value="">-- Select Gender --</option>
-                                <option value="Male"
+                                <option value="" data-i18n="training-form.select-gender">
+                                    <?php echo $lang['training-form']['select-gender'] ?? '-- Select Gender --'; ?>
+                                </option>
+                                <option value="Male" data-i18n="training-form.gender.male"
                                     <?php echo (isset($form_data['gender']) && $form_data['gender'] == 'Male') ? 'selected' : ''; ?>>
-                                    Male</option>
-                                <option value="Female"
+                                    <?php echo $lang['training-form']['gender']['male'] ?? 'Male'; ?></option>
+                                <option value="Female" data-i18n="training-form.gender.female"
                                     <?php echo (isset($form_data['gender']) && $form_data['gender'] == 'Female') ? 'selected' : ''; ?>>
-                                    Female</option>
+                                    <?php echo $lang['training-form']['gender']['female'] ?? 'Female'; ?></option>
                             </select>
-                            <label for="gender-select">Gender</label>
+                            <label for="gender-select"
+                                data-i18n="training-form.gender"><?php echo $lang['training-form']['gender'] ?? 'Gender'; ?></label>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="mb-4">
-                <h5 class="text-white mb-3">Academic Information</h5>
+                <h5 class="text-white mb-3" data-i18n="training-form.academic-info-heading">
+                    <?php echo $lang['training-form']['academic-info-heading'] ?? 'Academic Information'; ?></h5>
                 <div class="row g-3">
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="university" name="university"
-                                placeholder="University Name" required
-                                value="<?php echo htmlspecialchars($form_data['university'] ?? ''); ?>">
-                            <label for="university">University Name</label>
+                                placeholder="<?php echo $lang['training-form']['university-placeholder'] ?? 'University Name'; ?>"
+                                required value="<?php echo htmlspecialchars($form_data['university'] ?? ''); ?>">
+                            <label for="university"
+                                data-i18n="training-form.university"><?php echo $lang['training-form']['university'] ?? 'University Name'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="uni-id" name="uni_id"
-                                placeholder="University ID Number" required
-                                value="<?php echo htmlspecialchars($form_data['uni_id'] ?? ''); ?>">
-                            <label for="uni-id">University ID Number</label>
+                                placeholder="<?php echo $lang['training-form']['university-id-placeholder'] ?? 'University ID Number'; ?>"
+                                required value="<?php echo htmlspecialchars($form_data['uni_id'] ?? ''); ?>">
+                            <label for="uni-id"
+                                data-i18n="training-form.university-id"><?php echo $lang['training-form']['university-id'] ?? 'University ID Number'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="major" name="major" placeholder="Major" required
-                                value="<?php echo htmlspecialchars($form_data['major'] ?? ''); ?>">
-                            <label for="major">Major</label>
+                            <input type="text" class="form-control" id="major" name="major"
+                                placeholder="<?php echo $lang['training-form']['major-placeholder'] ?? 'Major'; ?>"
+                                required value="<?php echo htmlspecialchars($form_data['major'] ?? ''); ?>">
+                            <label for="major"
+                                data-i18n="training-form.major"><?php echo $lang['training-form']['major'] ?? 'Major'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="degree" name="degree" placeholder="Degree"
+                            <input type="text" class="form-control" id="degree" name="degree"
+                                placeholder="<?php echo $lang['training-form']['degree-placeholder'] ?? 'Degree'; ?>"
                                 required value="<?php echo htmlspecialchars($form_data['degree'] ?? ''); ?>">
-                            <label for="degree">Degree</label>
+                            <label for="degree"
+                                data-i18n="training-form.degree"><?php echo $lang['training-form']['degree'] ?? 'Degree'; ?></label>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="mb-4">
-                <h5 class="text-white mb-3">Training Information</h5>
+                <h5 class="text-white mb-3" data-i18n="training-form.training-info-heading">
+                    <?php echo $lang['training-form']['training-info-heading'] ?? 'Training Information'; ?></h5>
                 <div class="row g-3">
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input type="date" class="form-control" id="start-date" name="start_date" required
                                 value="<?php echo htmlspecialchars($form_data['start_date'] ?? ''); ?>">
-                            <label for="start-date">Training Start Date</label>
+                            <label for="start-date"
+                                data-i18n="training-form.start-date"><?php echo $lang['training-form']['start-date'] ?? 'Training Start Date'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input type="date" class="form-control" id="end-date" name="end_date" required
                                 value="<?php echo htmlspecialchars($form_data['end_date'] ?? ''); ?>">
-                            <label for="end-date">Training End Date</label>
+                            <label for="end-date"
+                                data-i18n="training-form.end-date"><?php echo $lang['training-form']['end-date'] ?? 'Training End Date'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="supervisor-name" name="supervisor_name"
-                                placeholder="Academic Supervisor Name" required
-                                value="<?php echo htmlspecialchars($form_data['supervisor_name'] ?? ''); ?>">
-                            <label for="supervisor-name">Academic Supervisor Name</label>
+                                placeholder="<?php echo $lang['training-form']['supervisor-name-placeholder'] ?? 'Academic Supervisor Name'; ?>"
+                                required value="<?php echo htmlspecialchars($form_data['supervisor_name'] ?? ''); ?>">
+                            <label for="supervisor-name"
+                                data-i18n="training-form.supervisor-name"><?php echo $lang['training-form']['supervisor-name'] ?? 'Academic Supervisor Name'; ?></label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input type="email" class="form-control" id="supervisor-email" name="supervisor_email"
-                                placeholder="Academic Supervisor Email" required
-                                value="<?php echo htmlspecialchars($form_data['supervisor_email'] ?? ''); ?>">
-                            <label for="supervisor-email">Academic Supervisor Email</label>
+                                placeholder="<?php echo $lang['training-form']['supervisor-email-placeholder'] ?? 'Academic Supervisor Email'; ?>"
+                                required value="<?php echo htmlspecialchars($form_data['supervisor_email'] ?? ''); ?>">
+                            <label for="supervisor-email"
+                                data-i18n="training-form.supervisor-email"><?php echo $lang['training-form']['supervisor-email'] ?? 'Academic Supervisor Email'; ?></label>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="mb-4">
-                <h5 class="text-white mb-3">Center Selection</h5>
+                <h5 class="text-white mb-3" data-i18n="training-form.center-selection-heading">
+                    <?php echo $lang['training-form']['center-selection-heading'] ?? 'Center Selection'; ?></h5>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="center-search"
-                        placeholder="Search for health centers and hospitals...">
-                    <label for="center-search">Available Facilities</label>
+                        placeholder="<?php echo $lang['training-form']['center-search-placeholder'] ?? 'Search for health centers and hospitals...'; ?>"
+                        data-i18n-placeholder="training-form.center-search-placeholder">
+                    <label for="center-search"
+                        data-i18n="training-form.available-facilities"><?php echo $lang['training-form']['available-facilities'] ?? 'Available Facilities'; ?></label>
                 </div>
                 <div class="mt-2">
                     <select class="form-select" id="center-select" name="center" required>
-                        <option value="">-- Select Center --</option>
+                        <option value="" data-i18n="training-form.select-center">
+                            <?php echo $lang['training-form']['select-center'] ?? '-- Select Center --'; ?></option>
                         <option value="Al-Ghadeer"
                             <?php echo (isset($form_data['center']) && $form_data['center'] == 'Al-Ghadeer') ? 'selected' : ''; ?>>
                             Al-Ghadeer</option>
@@ -634,22 +658,26 @@ unset($_SESSION['form_data']);
                             <?php echo (isset($form_data['center']) && $form_data['center'] == 'Shuweyah') ? 'selected' : ''; ?>>
                             Shuweyah</option>
                     </select>
-                    <div id="center-no-results" class="text-danger small mt-2" style="display:none;">No results found.
-                    </div>
+                    <div id="center-no-results" class="text-danger small mt-2" style="display:none;"
+                        data-i18n="training-form.no-results">
+                        <?php echo $lang['training-form']['no-results'] ?? 'No results found.'; ?></div>
                 </div>
             </div>
 
             <div class="mb-4">
-                <h4 class="text-white mb-3">Required Documents</h4>
+                <h4 class="text-white mb-3" data-i18n="training-form.required-documents-heading">
+                    <?php echo $lang['training-form']['required-documents-heading'] ?? 'Required Documents'; ?></h4>
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label for="training-letter" class="form-label text-white small">Training Letter (PDF)</label>
+                        <label for="training-letter" class="form-label text-white small"
+                            data-i18n="training-form.training-letter"><?php echo $lang['training-form']['training-letter'] ?? 'Training Letter (PDF)'; ?></label>
                         <input type="file" class="form-control" id="training-letter" name="training_letter"
                             accept=".pdf" required>
                         <div id="letter-preview" class="file-preview"></div>
                     </div>
                     <div class="col-md-6">
-                        <label for="cv" class="form-label text-white small">Curriculum Vitae (CV)</label>
+                        <label for="cv" class="form-label text-white small"
+                            data-i18n="training-form.cv"><?php echo $lang['training-form']['cv'] ?? 'Curriculum Vitae (CV)'; ?></label>
                         <input type="file" class="form-control" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
                         <div id="cv-preview" class="file-preview"></div>
                     </div>
@@ -658,10 +686,12 @@ unset($_SESSION['form_data']);
 
             <div class="row g-3 mt-4">
                 <div class="col-12 col-md-6">
-                    <button type="submit" id="submit-btn" class="w-100 btn btn-lg btn-primary">Submit</button>
+                    <button type="submit" id="submit-btn" class="w-100 btn btn-lg btn-primary"
+                        data-i18n="training-form.submit"><?php echo $lang['training-form']['submit'] ?? 'Submit'; ?></button>
                 </div>
                 <div class="col-12 col-md-6">
-                    <a href="?page=home" class="w-100 btn btn-lg btn-outline-secondary">Cancel</a>
+                    <a href="?page=home" class="w-100 btn btn-lg btn-outline-secondary"
+                        data-i18n="training-form.cancel"><?php echo $lang['training-form']['cancel'] ?? 'Cancel'; ?></a>
                 </div>
             </div>
         </form>

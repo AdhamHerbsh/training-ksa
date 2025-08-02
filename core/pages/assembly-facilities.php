@@ -9,9 +9,12 @@ require_once __DIR__ . '/../db/connection.php';
             <!-- Filter Buttons -->
             <div class="row mb-3 py-3">
                 <div class="col-12 d-flex justify-content-center gap-3">
-                    <button class="btn btn-primary filter-btn active" data-filter="all">All</button>
-                    <button class="btn btn-outline-light filter-btn" data-filter="health-center">Health Centers</button>
-                    <button class="btn btn-outline-light filter-btn" data-filter="hospital">Hospitals</button>
+                    <button class="btn btn-primary filter-btn active" data-filter="all"
+                        data-i18n="assembly-facilities.all"></button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="health-center"
+                        data-i18n="assembly-facilities.health-centers"></button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="hospital"
+                        data-i18n="assembly-facilities.hospitals"></button>
                 </div>
             </div>
 
@@ -22,7 +25,7 @@ require_once __DIR__ . '/../db/connection.php';
                         <span class="input-group-text rounded-4 m-auto w-100">
                             <i class="bi bi-search"></i>
                             <input type="text" class="form-control rounded-4 ms-2" id="searchFacilities"
-                                placeholder="Search facilities...">
+                                data-i18n="[placeholder]assembly-facilities.search-placeholder">
                         </span>
                     </div>
                 </div>
@@ -60,7 +63,8 @@ require_once __DIR__ . '/../db/connection.php';
                             <p class="lead"><?php echo $center['governorate'] ?></p>
                             <div class="mt-3">
                                 <a href="<?php echo $center['location_url'] ?>" class="btn btn-outline-light"> <i
-                                        class="bi bi-pin-map"></i> Location on Map</a>
+                                        class="bi bi-pin-map"></i> <span
+                                        data-i18n="assembly-facilities.location-map"></span></a>
                             </div>
                         </div>
                     </div>
@@ -96,8 +100,9 @@ require_once __DIR__ . '/../db/connection.php';
                                 <?php echo $hospital['phone_number'] ?></p>
                             <p class="lead"><?php echo $hospital['governorate'] ?></p>
                             <div class="mt-3">
-                                <a href="<?php echo $center['location_url'] ?>" class="btn btn-outline-light"> <i
-                                        class="bi bi-pin-map"></i> Location on Map</a>
+                                <a href="<?php echo $hospital['location_url'] ?>" class="btn btn-outline-light"> <i
+                                        class="bi bi-pin-map"></i> <span
+                                        data-i18n="assembly-facilities.location-map"></span></a>
                             </div>
                         </div>
                     </div>

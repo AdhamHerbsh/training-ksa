@@ -83,7 +83,7 @@ $stmt->close();
     <div class="form-signin overlay-box py-2 px-4 m-auto shadow border border-1 border-secondary rounded-4">
         <?php
         if ($success) {
-            echo '<div class="alert alert-success">Profile updated successfully.</div>';
+            echo '<div class="alert alert-success" data-i18n="profile.update-success">Profile updated successfully.</div>';
         }
         if (!empty($errors)) {
             echo '<div class="alert alert-danger">';
@@ -94,33 +94,33 @@ $stmt->close();
         }
         ?>
         <form id="trainee-form" action="?page=profile" method="POST" enctype="multipart/form-data">
-            <h1 class="mb-3 fw-normal text-white">Personal Information</h1>
+            <h1 class="mb-3 fw-normal text-white" data-i18n="profile.title">Personal Information</h1>
 
             <div class="form-floating mb-3">
                 <input type="text" class="form-control editable" id="national_id" name="national_id" maxlength="10"
                     pattern="\d{10}" placeholder="National ID / Iqama" value="<?= $user['national_id']; ?>" readonly>
-                <label for="national_id">National ID / Iqama</label>
+                <label for="national_id" data-i18n="profile.national-id">National ID / Iqama</label>
             </div>
 
             <div class="form-floating mb-3">
                 <input type="text" class="form-control editable" id="full_name_ar" name="full_name_ar"
                     placeholder="Full Name (Arabic)" value="<?= $user['name_ar']; ?>" readonly>
-                <label for="full_name_ar">Full Name (Arabic)</label>
+                <label for="full_name_ar" data-i18n="profile.name-ar">Full Name (Arabic)</label>
             </div>
 
             <div class="form-floating mb-3">
                 <input type="text" class="form-control editable" id="full_name_en" name="full_name_en"
                     placeholder="Full Name (English)" value="<?= $user['name_en']; ?>" readonly>
-                <label for="full_name_en">Full Name (English)</label>
+                <label for="full_name_en" data-i18n="profile.name-en">Full Name (English)</label>
             </div>
             <div class="form-floating mb-3">
                 <select class="form-control editable" id="gender" name="gender">
-                    <option value="" <?php if ($user['gender'] === '') echo 'selected'; ?> disabled>Select Gender
+                    <option value="" <?php if ($user['gender'] === '') echo 'selected'; ?> disabled data-i18n="auth.register.select-gender">Select Gender
                     </option>
-                    <option value="Female" <?php if ($user['gender'] === 'Female') echo 'selected'; ?>>Female</option>
-                    <option value="Male" <?php if ($user['gender'] === 'Male') echo 'selected'; ?>>Male</option>
+                    <option value="Female" <?php if ($user['gender'] === 'Female') echo 'selected'; ?> data-i18n="profile.female">Female</option>
+                    <option value="Male" <?php if ($user['gender'] === 'Male') echo 'selected'; ?> data-i18n="profile.male">Male</option>
                 </select>
-                <label for="gender">Gender</label>
+                <label for="gender" data-i18n="profile.gender">Gender</label>
             </div>
 
             <div class="row mb-3">
@@ -128,32 +128,30 @@ $stmt->close();
                     <div class="form-floating">
                         <input type="text" class="form-control" id="country_code" name="country_code"
                             value="<?= $user['country_code']; ?>" maxlength="4" placeholder="Country Code" readonly>
-                        <label for="country_code">Code</label>
+                        <label for="country_code" data-i18n="profile.country-code">Code</label>
                     </div>
                 </div>
                 <div class="col-8">
                     <div class="form-floating">
                         <input type="text" class="form-control editable" id="mobile" name="mobile" pattern="\d{9}"
                             placeholder="Mobile Number" value="<?= $user['mobile']; ?>" readonly>
-                        <label for="mobile">Mobile Number</label>
+                        <label for="mobile" data-i18n="profile.mobile">Mobile Number</label>
                     </div>
                 </div>
-                <div class="error-message text-danger" id="mobile-error" style="display:none;">Invalid mobile number. It
-                    must be 9 digits.</div>
+                <div class="error-message text-danger" id="mobile-error" style="display:none;" data-i18n="training-form.errors.invalid-mobile">Invalid mobile number. It must be 9 digits.</div>
             </div>
 
             <div class="form-floating mb-3">
                 <input type="email" class="form-control editable" id="email" name="email" placeholder="Email"
                     value="<?= $user['email']; ?>" readonly>
-                <label for="email">Email</label>
-                <div class="error-message text-danger" id="email-error" style="display:none;">Please enter a valid email
-                    address.</div>
+                <label for="email" data-i18n="profile.email">Email</label>
+                <div class="error-message text-danger" id="email-error" style="display:none;" data-i18n="training-form.errors.invalid-email">Please enter a valid email address.</div>
             </div>
 
-            <button type="button" id="edit-btn" class="w-100 btn btn-lg btn-primary mb-3">Edit</button>
+            <button type="button" id="edit-btn" class="w-100 btn btn-lg btn-primary mb-3" data-i18n="common.edit">Edit</button>
             <button type="submit" id="save-btn" name="save_profile"
-                class="w-100 btn btn-lg btn-success mb-3">Save</button>
-            <button type="button" id="cancel-btn" class="w-100 btn btn-lg btn-outline-secondary mb-3">Cancel</button>
+                class="w-100 btn btn-lg btn-success mb-3" data-i18n="common.save">Save</button>
+            <button type="button" id="cancel-btn" class="w-100 btn btn-lg btn-outline-secondary mb-3" data-i18n="common.cancel">Cancel</button>
         </form>
     </div>
 </section>

@@ -31,6 +31,6 @@
                         class="bi bi-twitter-x"></i></a></li>
         </ul>
 
-        <p class="text-center">© 2025 Company, Inc</p>
+        <p class="text-center" data-i18n="footer.copyright">© 2025 Company, Inc</p>
     </div>
 </footer>

@@ -44,6 +44,7 @@ nav {}
 
 #navmenu {
     display: none;
+    left: 0% !important;
     z-index: 1021;
     transition: ease-in-out .5s;
 }
@@ -229,6 +230,17 @@ section {
 
 #togglePassword {
     left: 80%;
+}
+
+:dir(rtl) {
+
+    .form-floating>label {
+        transform-origin: 90% 0;
+    }
+
+    #togglePassword {
+        left: 10%;
+    }
 }
 
 /* #save-btn,

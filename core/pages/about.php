@@ -32,8 +32,9 @@
                     important priorities, which is the dissemination of knowledge and the promotion of a culture of
                     development and achievement in the community.
                 </p>
+
+                <hr>
             </div>
         </div>
     </div>
-
 </section>
