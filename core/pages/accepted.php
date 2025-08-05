@@ -52,8 +52,8 @@ $conn->close();
                                 <i class="bi bi-search text-white"></i>
                             </span>
                             <input type="text" class="form-control bg-dark text-white border-secondary"
-                                id="searchTrainees" placeholder="" data-i18n="accepted.search-placeholder"
-                                aria-label="Search trainees">
+                                id="searchTrainees" placeholder="Search..."
+                                data-i18n="[placeholder]accepted.search-placeholder" aria-label="Search trainees">
                         </div>
                     </div>
                 </div>
@@ -85,53 +85,53 @@ $conn->close();
                         </thead>
                         <tbody id="confirmedTable">
                             <?php if (!empty($requests)): ?>
-                                <?php foreach ($requests as $request): ?>
-                                    <tr>
-                                        <td class="border-bottom border-secondary">
-                                            <div class="d-flex align-items-center gap-2">
-                                                <div class="bg-success rounded-circle p-2 d-flex align-items-center justify-content-center"
-                                                    style="width: 35px; height: 35px;">
-                                                    <span
-                                                        class="text-white fw-bold"><?php echo htmlspecialchars(strtoupper(substr($request['en_name'], 0, 1))); ?></span>
-                                                </div>
-                                                <span><?php echo htmlspecialchars($request['en_name']); ?></span>
-                                            </div>
-                                        </td>
-                                        <td class="border-bottom border-secondary">
+                            <?php foreach ($requests as $request): ?>
+                            <tr>
+                                <td class="border-bottom border-secondary">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="bg-success rounded-circle p-2 d-flex align-items-center justify-content-center"
+                                            style="width: 35px; height: 35px;">
                                             <span
-                                                class="badge bg-secondary"><?php echo htmlspecialchars($request['university']); ?></span>
-                                        </td>
-                                        <td class="border-bottom border-secondary">
-                                            <span
-                                                class="badge bg-info text-dark"><?php echo htmlspecialchars($request['major']); ?></span>
-                                        </td>
-                                        <td class="border-bottom border-secondary">
-                                            <a href="mailto:amani.2443@gmail.com"
-                                                class="text-decoration-none text-white d-flex align-items-center gap-2">
-                                                <i class="bi bi-envelope-fill text-muted"></i>
-                                                <?php echo htmlspecialchars($request['email']); ?>
-                                            </a>
-                                        </td>
-                                        <td class="border-bottom border-secondary">
-                                            <div class="d-flex align-items-center gap-2">
-                                                <i class="bi bi-calendar-check text-success"></i>
-                                                <small><?php echo htmlspecialchars($request['updated_at']); ?></small>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <tr>
-                                    <td colspan="22">
-                                        <div id="emptyRequestsState" class="text-center py-5">
-                                            <div class="text-muted">
-                                                <i class="bi bi-inbox-fill fs-1 mb-3 d-block"></i>
-                                                <h5 data-i18n="requests.no-data"></h5>
-                                                <p class="small" data-i18n="requests.no-data-hint"></p>
-                                            </div>
+                                                class="text-white fw-bold"><?php echo htmlspecialchars(strtoupper(substr($request['en_name'], 0, 1))); ?></span>
                                         </div>
-                                    </td>
-                                </tr>
+                                        <span><?php echo htmlspecialchars($request['en_name']); ?></span>
+                                    </div>
+                                </td>
+                                <td class="border-bottom border-secondary">
+                                    <span
+                                        class="badge bg-secondary"><?php echo htmlspecialchars($request['university']); ?></span>
+                                </td>
+                                <td class="border-bottom border-secondary">
+                                    <span
+                                        class="badge bg-info text-dark"><?php echo htmlspecialchars($request['major']); ?></span>
+                                </td>
+                                <td class="border-bottom border-secondary">
+                                    <a href="mailto:amani.2443@gmail.com"
+                                        class="text-decoration-none text-white d-flex align-items-center gap-2">
+                                        <i class="bi bi-envelope-fill text-muted"></i>
+                                        <?php echo htmlspecialchars($request['email']); ?>
+                                    </a>
+                                </td>
+                                <td class="border-bottom border-secondary">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="bi bi-calendar-check text-success"></i>
+                                        <small><?php echo htmlspecialchars($request['updated_at']); ?></small>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                            <?php else: ?>
+                            <tr>
+                                <td colspan="22">
+                                    <div id="emptyRequestsState" class="text-center py-5">
+                                        <div class="text-muted">
+                                            <i class="bi bi-inbox-fill fs-1 mb-3 d-block"></i>
+                                            <h5 data-i18n="requests.no-data"></h5>
+                                            <p class="small" data-i18n="requests.no-data-hint"></p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
                             <?php endif; ?>
                         </tbody>
                     </table>

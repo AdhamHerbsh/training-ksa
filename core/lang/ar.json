@@ -84,8 +84,7 @@
     "title": "قسم التدريب - مدينة الملك فهد الطبية",
     "contact": "اتصل بنا",
     "privacy-policy": "سياسة الخصوصية",
-    "usage-policy": "سياسة الاستخدام",
-    "copyright": "© 2025 الشركة ، Inc"
+    "usage-policy": "سياسة الاستخدام"
   },
   "navmenu": {
     "home": "الرئيسية",
@@ -450,11 +449,8 @@
   },
   "clearance": {
     "title": "ردود نموذج الإخلاء",
-    "all-departments": "كل الإدارات",
     "no-data": "لا توجد ردود إخلاء",
     "no-data-hint": "ستظهر الردود هنا",
-    "search-placeholder": "بحث...",
-    "print": "طباعة",
     "date": "التاريخ",
     "form-date": "تاريخ النموذج",
     "housing": "السكن",
@@ -470,7 +466,19 @@
     "documents": "المستندات",
     "id-photo": "صورة الهوية",
     "work-card": "بطاقة العمل",
-    "scroll-hint": "اسحب أفقياً لعرض جميع البيانات"
+    "scroll-hint": "اسحب أفقياً لعرض جميع البيانات",
+    "all-departments": "كل الإدارات",
+    "nursing-education": "إدارة تعليم التمريض",
+    "health-training": "إدارة التدريب الصحي",
+    "medical-training": "إدارة التدريب الطبي",
+    "administrative-training": "إدارة التدريب الإداري",
+    "volunteering": "إدارة التطوع",
+    "contracting-operation": "إدارة التعاقد / التشغيل",
+    "family-medicine": "أكاديمية طب الأسرة",
+    "healthcare-security": "إدارة الأمن الصحي",
+    "radiology": "إدارة الأشعة AAML",
+    "print": "طباعة",
+    "search-placeholder": "بحث..."
   },
   "clearance-form": {
     "form-title": "نموذج إخلاء طرف",
@@ -604,16 +612,30 @@
   "schedule-interview": {
     "title": "جدولة المقابلة",
     "day": "اليوم",
-    "select-day": "اختر يوماً",
+    "select-day": "اختر يومًا",
     "sunday": "الأحد",
-    "monday": "الاثنين",
+    "monday": "الإثنين",
     "tuesday": "الثلاثاء",
     "wednesday": "الأربعاء",
     "thursday": "الخميس",
     "friday": "الجمعة",
     "saturday": "السبت",
     "date": "التاريخ",
-    "time": "الوقت"
+    "time": "الوقت",
+    "close": "إغلاق",
+    "schedule": "جدولة",
+    "email-greeting": "بعد التحية ,,,",
+    "email-interview-notice": "ننوه بموعد مقابلة شخصية",
+    "email-day": "اليوم",
+    "email-date": "الموافق",
+    "email-time": "الساعة",
+    "email-instructions": "الرجاء إحضار السيرة الذاتية، ونسخة من خطاب التدريب",
+    "email-location": "مدينة الملك فهد الطبية، كلية الطب، الدور الثاني",
+    "email-subject": "موعد المقابلة الشخصية - مدينة الملك فهد الطبية",
+    "errors": {
+      "schedule-failed": "خطأ في جدولة المقابلة: ",
+      "schedule-error": "خطأ في جدولة المقابلة: "
+    }
   },
   "common": {
     "search": "بحث...",

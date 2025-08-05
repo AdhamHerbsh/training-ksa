@@ -54,15 +54,28 @@ $conn->close();
                                 <select id="adminFilter"
                                     class="form-select bg-dark text-white border-secondary flex-grow-1">
                                     <option value="all" data-i18n="clearance.all-departments">كل الإدارات</option>
-                                    <option value="Nursing Education Administration" data-i18n="clearance.nursing-education">Nursing Education Administration</option>
-                                    <option value="Health Training Administration" data-i18n="clearance.health-training">Health Training Administration</option>
-                                    <option value="Medical Training Administration" data-i18n="clearance.medical-training">Medical Training Administration</option>
-                                    <option value="Administrative Training Administration" data-i18n="clearance.administrative-training">Administrative Training Administration</option>
-                                    <option value="Volunteering Administration" data-i18n="clearance.volunteering">Volunteering Administration</option>
-                                    <option value="Contracting / Operation Administration" data-i18n="clearance.contracting-operation">Contracting / Operation Administration</option>
-                                    <option value="Family Medicine Academy" data-i18n="clearance.family-medicine">Family Medicine Academy</option>
-                                    <option value="Healthcare Security Administration" data-i18n="clearance.healthcare-security">Healthcare Security Administration</option>
-                                    <option value="Radiology Administration AAML" data-i18n="clearance.radiology">Radiology Administration AAML</option>
+                                    <option value="Nursing Education Administration"
+                                        data-i18n="clearance.nursing-education">Nursing Education Administration
+                                    </option>
+                                    <option value="Health Training Administration"
+                                        data-i18n="clearance.health-training">Health Training Administration</option>
+                                    <option value="Medical Training Administration"
+                                        data-i18n="clearance.medical-training">Medical Training Administration</option>
+                                    <option value="Administrative Training Administration"
+                                        data-i18n="clearance.administrative-training">Administrative Training
+                                        Administration</option>
+                                    <option value="Volunteering Administration" data-i18n="clearance.volunteering">
+                                        Volunteering Administration</option>
+                                    <option value="Contracting / Operation Administration"
+                                        data-i18n="clearance.contracting-operation">Contracting / Operation
+                                        Administration</option>
+                                    <option value="Family Medicine Academy" data-i18n="clearance.family-medicine">Family
+                                        Medicine Academy</option>
+                                    <option value="Healthcare Security Administration"
+                                        data-i18n="clearance.healthcare-security">Healthcare Security Administration
+                                    </option>
+                                    <option value="Radiology Administration AAML" data-i18n="clearance.radiology">
+                                        Radiology Administration AAML</option>
                                 </select>
                                 <button onclick="window.print()"
                                     class="btn btn-light d-inline-flex align-items-center gap-2">
@@ -128,13 +141,15 @@ $conn->close();
                                         Administration
                                         <i class="bi bi-arrow-down-up ms-1 text-muted small" data-sort="text"></i>
                                     </th>
-                                    <th class="border-bottom border-secondary bg-dark bg-opacity-50" data-i18n="clearance.documents">Documents</th>
+                                    <th class="border-bottom border-secondary bg-dark bg-opacity-50"
+                                        data-i18n="clearance.documents">Documents</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php if (empty($clearance_data)): ?>
                                     <tr>
-                                        <td colspan="14" class="text-center border-bottom border-secondary" data-i18n="clearance.no-data">No clearance
+                                        <td colspan="14" class="text-center border-bottom border-secondary"
+                                            data-i18n="clearance.no-data">No clearance
                                             responses found.</td>
                                     </tr>
                                 <?php else: ?>
@@ -207,13 +222,15 @@ $conn->close();
                                                 <?php if (!empty($row['id_photo_path'])): ?>
                                                     <a href="<?php echo htmlspecialchars($row['id_photo_path']); ?>" target="_blank"
                                                         class="btn btn-sm btn-outline-primary mb-1 me-1">
-                                                        <i class="bi bi-file-earmark-image"></i> <span data-i18n="clearance.id-photo">ID Photo</span>
+                                                        <i class="bi bi-file-earmark-image"></i> <span
+                                                            data-i18n="clearance.id-photo">ID Photo</span>
                                                     </a>
                                                 <?php endif; ?>
                                                 <?php if (!empty($row['work_card_path'])): ?>
                                                     <a href="<?php echo htmlspecialchars($row['work_card_path']); ?>"
                                                         target="_blank" class="btn btn-sm btn-outline-primary mb-1">
-                                                        <i class="bi bi-file-earmark-medical"></i> <span data-i18n="clearance.work-card">Work Card</span>
+                                                        <i class="bi bi-file-earmark-medical"></i> <span
+                                                            data-i18n="clearance.work-card">Work Card</span>
                                                     </a>
                                                 <?php endif; ?>
                                                 <?php if (empty($row['id_photo_path']) && empty($row['work_card_path'])): ?>

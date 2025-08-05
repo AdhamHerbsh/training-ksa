@@ -2,7 +2,7 @@
     <ul class="nav">
         <li class="nav-item">
             <button id="globeBtn" type="button" class="btn btn-outline-light" data-bs-toggle="button"
-                aria-pressed="false" autocomplete="off" data-i18n="header.translation">
+                data-i18n="header.translation">
                 English
             </button>
         </li>

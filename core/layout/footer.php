@@ -30,7 +30,5 @@
             <li class="nav-item"><a href="https://x.com/cluster2_riyadh" class="nav-link"><i
                         class="bi bi-twitter-x"></i></a></li>
         </ul>
-
-        <p class="text-center" data-i18n="footer.copyright">© 2025 Company, Inc</p>
     </div>
 </footer>

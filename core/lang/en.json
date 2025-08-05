@@ -1,6 +1,6 @@
 {
   "header": {
-    "translation": "English"
+    "translation": "عربي"
   },
   "page": {
     "title": "Training Department - King Fahad Medical City"
@@ -77,15 +77,14 @@
     "title": "Training Department At Riyadh Second Health Cluster",
     "ex": "Extension: 10873",
     "em": "Email: cooperativetraining@kfmc.med.sa",
-    "loc": "Location: Medical City Gate No. 2 – College of Medicine – 2nd Floor.",
+    "loc": "Location: Medical City Gate No. 2 - College of Medicine - 2nd Floor.",
     "link": "View location on map"
   },
   "footer": {
     "title": "Training Department - King Fahad Medical City",
     "contact": "Contact Us",
     "privacy-policy": "Privacy Policy",
-    "usage-policy": "Usage Policy",
-    "copyright": "© 2025 Company, Inc"
+    "usage-policy": "Usage Policy"
   },
   "navmenu": {
     "home": "Home",
@@ -145,7 +144,7 @@
       "email-placeholder": "name@example.com",
       "send-code-button": "Send Verification Code",
       "back-button": "Back",
-      "copyright": "© 2017–2022"
+      "copyright": "© 201 -2022"
     },
     "logout": {
       "title": "Logged Out Successfully",
@@ -450,11 +449,8 @@
   },
   "clearance": {
     "title": "Clearance Form Responses",
-    "all-departments": "All Departments",
     "no-data": "No clearance responses found",
     "no-data-hint": "Responses will appear here",
-    "search-placeholder": "Search...",
-    "print": "Print",
     "date": "Date",
     "form-date": "Form Date",
     "housing": "Housing",
@@ -470,7 +466,19 @@
     "documents": "Documents",
     "id-photo": "ID Photo",
     "work-card": "Work Card",
-    "scroll-hint": "Scroll horizontally to view all data"
+    "scroll-hint": "Scroll horizontally to view all data",
+    "all-departments": "All Departments",
+    "nursing-education": "Nursing Education Administration",
+    "health-training": "Health Training Administration",
+    "medical-training": "Medical Training Administration",
+    "administrative-training": "Administrative Training Administration",
+    "volunteering": "Volunteering Administration",
+    "contracting-operation": "Contracting / Operation Administration",
+    "family-medicine": "Family Medicine Academy",
+    "healthcare-security": "Healthcare Security Administration",
+    "radiology": "Radiology Administration AAML",
+    "print": "Print",
+    "search-placeholder": "Search..."
   },
   "clearance-form": {
     "form-title": "Clearance Form",
@@ -613,7 +621,21 @@
     "friday": "Friday",
     "saturday": "Saturday",
     "date": "Date",
-    "time": "Time"
+    "time": "Time",
+    "close": "Close",
+    "schedule": "Schedule",
+    "email-greeting": "بعد التحية ,,,",
+    "email-interview-notice": "ننوه بموعد مقابلة شخصية",
+    "email-day": "اليوم",
+    "email-date": "الموافق",
+    "email-time": "الساعة",
+    "email-instructions": "الرجاء احضار السيرة الذاتية , ونسخة من خطاب التدريب",
+    "email-location": "مدينة الملك فهد الطبية، كلية الطب، الدور الثاني",
+    "email-subject": "موعد المقابلة الشخصية - مدينة الملك فهد الطبية",
+    "errors": {
+      "schedule-failed": "Error scheduling interview: ",
+      "schedule-error": "Error scheduling interview: "
+    }
   },
   "common": {
     "search": "Search...",

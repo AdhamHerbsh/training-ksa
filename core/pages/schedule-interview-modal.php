@@ -4,7 +4,8 @@
     <div class="modal-dialog">
         <div class="modal-content bg-dark text-white">
             <div class="modal-header">
-                <h5 class="modal-title" id="scheduleInterviewModalLabel">Schedule Interview</h5>
+                <h5 class="modal-title" id="scheduleInterviewModalLabel" data-i18n="schedule-interview.title">
+                    <?php echo $lang['schedule-interview']['title'] ?? 'Schedule Interview'; ?></h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
@@ -12,31 +13,44 @@
                 <form id="scheduleInterviewForm">
                     <input type="hidden" id="requestId" name="requestId">
                     <div class="mb-3">
-                        <label for="interviewDay" class="form-label">Day</label>
+                        <label for="interviewDay" class="form-label"
+                            data-i18n="schedule-interview.day"><?php echo $lang['schedule-interview']['day'] ?? 'Day'; ?></label>
                         <select class="form-select" id="interviewDay" name="day" required>
-                            <option value="">Select a day</option>
-                            <option value="Sunday">Sunday</option>
-                            <option value="Monday">Monday</option>
-                            <option value="Tuesday">Tuesday</option>
-                            <option value="Wednesday">Wednesday</option>
-                            <option value="Thursday">Thursday</option>
-                            <option value="Friday">Friday</option>
-                            <option value="Saturday">Saturday</option>
+                            <option value="" data-i18n="schedule-interview.select-day">
+                                <?php echo $lang['schedule-interview']['select-day'] ?? 'Select a day'; ?></option>
+                            <option value="Sunday" data-i18n="schedule-interview.sunday">
+                                <?php echo $lang['schedule-interview']['sunday'] ?? 'Sunday'; ?></option>
+                            <option value="Monday" data-i18n="schedule-interview.monday">
+                                <?php echo $lang['schedule-interview']['monday'] ?? 'Monday'; ?></option>
+                            <option value="Tuesday" data-i18n="schedule-interview.tuesday">
+                                <?php echo $lang['schedule-interview']['tuesday'] ?? 'Tuesday'; ?></option>
+                            <option value="Wednesday" data-i18n="schedule-interview.wednesday">
+                                <?php echo $lang['schedule-interview']['wednesday'] ?? 'Wednesday'; ?></option>
+                            <option value="Thursday" data-i18n="schedule-interview.thursday">
+                                <?php echo $lang['schedule-interview']['thursday'] ?? 'Thursday'; ?></option>
+                            <option value="Friday" data-i18n="schedule-interview.friday">
+                                <?php echo $lang['schedule-interview']['friday'] ?? 'Friday'; ?></option>
+                            <option value="Saturday" data-i18n="schedule-interview.saturday">
+                                <?php echo $lang['schedule-interview']['saturday'] ?? 'Saturday'; ?></option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="interviewDate" class="form-label">Date</label>
+                        <label for="interviewDate" class="form-label"
+                            data-i18n="schedule-interview.date"><?php echo $lang['schedule-interview']['date'] ?? 'Date'; ?></label>
                         <input type="date" class="form-control" id="interviewDate" name="date" required>
                     </div>
                     <div class="mb-3">
-                        <label for="interviewTime" class="form-label">Time</label>
+                        <label for="interviewTime" class="form-label"
+                            data-i18n="schedule-interview.time"><?php echo $lang['schedule-interview']['time'] ?? 'Time'; ?></label>
                         <input type="time" class="form-control" id="interviewTime" name="time" required>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveInterview()">Schedule</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    data-i18n="schedule-interview.close"><?php echo $lang['schedule-interview']['close'] ?? 'Close'; ?></button>
+                <button type="button" class="btn btn-primary" onclick="saveInterview()"
+                    data-i18n="schedule-interview.schedule"><?php echo $lang['schedule-interview']['schedule'] ?? 'Schedule'; ?></button>
             </div>
         </div>
     </div>
@@ -105,23 +119,23 @@
         });
 
         // Construct the email body
-        const emailBody = `بعد التحية ,,,
+        const emailBody = `<?php echo $lang['schedule-interview']['email-greeting'] ?? 'بعد التحية ,,,'; ?>
 
-ننوه بموعد مقابلة شخصية
-اليوم: ${day} 
-الموافق: ${formattedDate}
-الساعة: ${formattedTime}
+<?php echo $lang['schedule-interview']['email-interview-notice'] ?? 'ننوه بموعد مقابلة شخصية'; ?>
+<?php echo $lang['schedule-interview']['email-day'] ?? 'اليوم'; ?>: ${day}
+<?php echo $lang['schedule-interview']['email-date'] ?? 'الموافق'; ?>: ${formattedDate}
+<?php echo $lang['schedule-interview']['email-time'] ?? 'الساعة'; ?>: ${formattedTime}
 
-الرجاء احضار السيرة الذاتية , ونسخة من خطاب التدريب
+<?php echo $lang['schedule-interview']['email-instructions'] ?? 'الرجاء احضار السيرة الذاتية , ونسخة من خطاب التدريب'; ?>
 
-مدينة الملك فهد الطبية، كلية الطب، الدور الثاني
+<?php echo $lang['schedule-interview']['email-location'] ?? 'مدينة الملك فهد الطبية، كلية الطب، الدور الثاني'; ?>
 
 https://maps.app.goo.gl/dt8qNJUY6FFCFnAS7`;
 
         // Encode the email body for the mailto link
         const encodedBody = encodeURIComponent(emailBody);
         const mailtoLink =
-            `mailto:${email}?subject=${encodeURIComponent('موعد المقابلة الشخصية - مدينة الملك فهد الطبية')}&body=${encodedBody}`;
+            `mailto:${email}?subject=${encodeURIComponent('<?php echo $lang['schedule-interview']['email-subject'] ?? 'موعد المقابلة الشخصية - مدينة الملك فهد الطبية'; ?>')}&body=${encodedBody}`;
 
         // Open email client
         window.location.href = mailtoLink;
@@ -142,11 +156,13 @@ https://maps.app.goo.gl/dt8qNJUY6FFCFnAS7`;
                     // Optionally refresh the page
                     // location.reload();
                 } else {
-                    alert('Error scheduling interview: ' + data.message);
+                    alert('<?php echo $lang['schedule-interview']['errors']['schedule-failed'] ?? 'Error scheduling interview: '; ?>' +
+                        data.message);
                 }
             })
             .catch(error => {
-                alert('Error scheduling interview: ' + error);
+                alert('<?php echo $lang['schedule-interview']['errors']['schedule-error'] ?? 'Error scheduling interview: '; ?>' +
+                    error);
             });
     }
 </script>

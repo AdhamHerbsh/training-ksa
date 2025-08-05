@@ -20,3 +20,12 @@ session_destroy();
         <a href="?page=home" class="btn btn-info text-dark-50" data-i18n="auth.logout.btn">Return to Homepage Now</a>
     </div>
 </main>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            window.location.href = '?page=home';
+        }, 5000); // 5000 milliseconds = 5 seconds
+    });
+</script>
